@@ -1,1 +1,1 @@
-from app import app
+from habit_app import app
