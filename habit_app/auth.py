@@ -22,11 +22,11 @@ def create_account():
         if error is None:
             db.execute("INSERT INTO USER(username) values (?)", (form.username.data,))
             db.commit()
-            #TODO: Add salt and hash to password before saving
-            execute_sql("INSERT INTO PASSWORD(username, password_hash) values(?,?)", (form.username.data, form.password.data))
+            execute_sql("INSERT INTO PASSWORD(username, password_hash) values(?,?)",
+                        (form.username.data, generate_password_hash(form.password.data, "sha256")))
             return redirect(url_for('auth.login'))
         else:
-            print(error)
+           #print(error)
             flash(error)
             return redirect(url_for('auth.create_account'))
     return render_template('create_account.html', title='Create Account', form=form)
@@ -41,10 +41,8 @@ def login():
 
         if db.execute("SELECT EXISTS(SELECT 1 from PASSWORD where username = (?))", (form.username.data,)).fetchone()[0] == 1:
             saved_pass_hash= db.execute("SELECT password_hash from PASSWORD where username = (?)", (form.username.data,)).fetchone()[0]
-            # TODO: verify entered password against hash
-            entered_pass_hash = form.password.data
 
-            if entered_pass_hash == saved_pass_hash:
+            if check_password_hash(saved_pass_hash, form.password.data):
                 # redirect to home
                 session.clear()
                 session['username'] = form.username.data
