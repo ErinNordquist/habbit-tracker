@@ -45,7 +45,10 @@ def login():
             if check_password_hash(saved_pass_hash, form.password.data):
                 # redirect to home
                 session.clear()
+                session.permanent = False
+                print(session)
                 session['username'] = form.username.data
+                print(session)
                 return redirect(url_for('routes.index'))
             else:
                 error = "Wrong username/password combination"
