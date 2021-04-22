@@ -8,8 +8,8 @@ bp = Blueprint("routes", __name__)
 
 @bp.route('/')
 @bp.route('/index')
-def index():
-    user = {'username': 'Stranger'}
+def index(username = 'Stranger'):
+    user = {'username': username}
     return render_template('index.html', title = 'Home', user = user)
 
 
