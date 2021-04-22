@@ -40,7 +40,7 @@ def login():
         db = get_db()
 
         if db.execute("SELECT EXISTS(SELECT 1 from PASSWORD where username = (?))", (form.username.data,)).fetchone()[0] == 1:
-            saved_pass_hash, salt = db.execute("SELECT password_hash, salt from PASSWORD where username = (?)", (form.username.data,)).fetchone()
+            saved_pass_hash= db.execute("SELECT password_hash from PASSWORD where username = (?)", (form.username.data,)).fetchone()[0]
             # TODO: verify entered password against hash
             entered_pass_hash = form.password.data
 
