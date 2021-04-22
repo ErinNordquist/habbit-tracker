@@ -16,7 +16,6 @@ def create_account():
         error = None
         db = get_db()
         #check if username already exists
-        print(db.execute("SELECT username from user WHERE username = (?)", (form.username.data,)).fetchone())
         if db.execute("SELECT username from user WHERE username = (?)", (form.username.data,)).fetchone() is not None:
             error = "Username is taken."
 
