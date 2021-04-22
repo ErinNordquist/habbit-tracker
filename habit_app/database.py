@@ -8,7 +8,7 @@ def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         #print(g)
-        db = g._database = sqlite3.connect(current_app.config['DATABASE'])
+        db = g._database = sqlite3.connect(current_app.config['DATABASE'], detect_types=sqlite3.PARSE_DECLTYPES)
     return db
 
 def close_connection(exception):

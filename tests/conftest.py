@@ -7,6 +7,8 @@ sys.path.append(os.getcwd())
 
 from habit_app import database, create_app
 
+with open(os.path.join(os.path.dirname(__file__),'test_data.sql'), 'rb') as f:
+    _test_data_sql = f.read().decode("utf8")
 
 @pytest.fixture
 def app():
@@ -16,6 +18,7 @@ def app():
 
     with app.app_context():
         database.init_db()
+        database.get_db().executescript(_test_data_sql)
 
     yield app
 

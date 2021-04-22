@@ -11,19 +11,13 @@
 <body>
     <div>Habit Tracker:
         <a href="/index">Home</a>
-        <a href="/create-account">Create Account</a>
-        <a href="/login">Login</a>
+        <a href="/auth/create-account">Create Account</a>
+        <a href="/auth/login">Login</a>
     </div>
     <hr>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for messages in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+    {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
     {% block content %}{% endblock %}
 </body>
 </html>

@@ -1,12 +1,10 @@
 DROP TABLE IF EXISTS USER;
 CREATE TABLE USER(
-    user_id INTEGER PRIMARY KEY,
-    username TEXT,
+    username TEXT PRIMARY KEY,
     date_joined DATETIME DEFAULT CURRENT_TIMESTAMP);
 
 DROP TABLE IF EXISTS PASSWORD;
 CREATE TABLE PASSWORD(
-    user_id INTEGER PRIMARY KEY,
-    password_hash,
-    salt,
+    username TEXT PRIMARY KEY,
+    password_hash VARCHAR,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP);
