@@ -13,15 +13,23 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 def create_account():
     form = CreateAccountForm()
     if request.method == 'POST':
-        # TODO: Need to check if username exists, if so then prompt the user to enter something else
+        error = None
         db = get_db()
-        db.cursor().execute("INSERT INTO USER(username) values (?)", (form.username.data,))
-        db.commit()
-        #user_id = query_db("SELECT user_id from USER where username = ?", (form.username.data,), one=True)
+        #check if username already exists
+        print(db.execute("SELECT username from user WHERE username = (?)", (form.username.data,)).fetchone())
+        if db.execute("SELECT username from user WHERE username = (?)", (form.username.data,)).fetchone() is not None:
+            error = "Username is taken."
 
-        #TODO: Add salt and hash to password before saving
-        execute_sql("INSERT INTO PASSWORD(username, password_hash) values(?,?)", (form.username.data, form.password.data))
-        return redirect(url_for('auth.login'))
+        if error is None:
+            db.execute("INSERT INTO USER(username) values (?)", (form.username.data,))
+            db.commit()
+            #TODO: Add salt and hash to password before saving
+            execute_sql("INSERT INTO PASSWORD(username, password_hash) values(?,?)", (form.username.data, form.password.data))
+            return redirect(url_for('auth.login'))
+        else:
+            print(error)
+            flash(error)
+            return redirect(url_for('auth.create_account'))
     return render_template('create_account.html', title='Create Account', form=form)
 
 @bp.route('/login', methods=['GET','POST'])

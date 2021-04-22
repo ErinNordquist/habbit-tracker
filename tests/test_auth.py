@@ -15,6 +15,7 @@ def test_create_user_successful(client, app):
     assert client.get("/auth/create-account").status_code == 200
     response = client.post("/auth/create-account", data={"username":"test_user", "password":"test_password"})
     #(response.status_code)
+    print(response.headers['Location'])
     assert "http://localhost/auth/login" == response.headers['Location']
 
     with app.app_context():
@@ -25,6 +26,19 @@ def test_create_user_successful(client, app):
         assert(
             database.get_db().execute("select * from PASSWORD where username = 'test_user'").fetchone() is not None
         )
+
+def test_create_user_username_not_available(client, app):
+    assert client.get("/auth/create-account").status_code == 200
+    response = client.post("/auth/create-account", data={"username":"saved_test_user", "password":"test_password"})
+    #(response.status_code)
+    assert "http://localhost/auth/create-account" == response.headers['Location']
+
+    with app.app_context():
+        assert (
+                database.get_db().execute("select count(*) from USER where username = 'saved_test_user'").fetchone()[0] == 1
+        )
+
+
 
 def test_login_successful(client, app):
     assert client.get("/auth/login").status_code == 200
