@@ -41,16 +41,16 @@ def test_create_user_username_not_available(client, app):
         )
 
 
-def test_login_successful(client):
+def test_login_successful(client, auth):
     assert client.get("/auth/login").status_code == 200
-    response = client.post("auth/login", data={"username":"saved_test_user", "password":"saved_test_password"})
+    response = auth.login(username="saved_test_user", password="saved_test_password")
     assert response.status_code == 302 # redirect code
     assert "http://localhost/index" == response.headers['Location']
 
 
-def test_login_fail_password(client):
+def test_login_fail_password(client, auth):
     assert client.get("/auth/login").status_code == 200
-    response = client.post("auth/login", data={"username":"saved_test_user", "password":"saved_test_passw654rord"})
+    response = auth.login(username="saved_test_user", password="saved_test_passw654rord")
     assert response.status_code == 302
     assert "http://localhost/auth/login" == response.headers['Location']
 
@@ -58,7 +58,6 @@ def test_login_fail_password(client):
 def test_login_fail_username(client, auth):
     assert client.get("/auth/login").status_code == 200
     response = auth.login(username="saved_tser", password="saved_test_password")
-        #client.post("auth/login", data={"username":"saved_tser", "password":"saved_test_password"})
     assert response.status_code == 302
     assert "http://localhost/auth/login" == response.headers['Location']
 
