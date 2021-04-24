@@ -31,3 +31,19 @@ def client(app):
     """Create a client to use during tests"""
     return app.test_client()
 
+class AuthActions(object):
+    def __init__(self, client):
+        self._client = client
+
+    def login(self, username='saved_test_user', password = 'saved_test_password'):
+        return self._client.post(
+            "/auth/login", data={'username':username, 'password': password}
+        )
+
+    #def logout(self):
+
+@pytest.fixture
+def auth(client):
+    return AuthActions(client)
+
+
