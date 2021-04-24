@@ -56,16 +56,21 @@ def test_login(client, auth, username, password, destination):
     assert response.status_code == 302 # redirect code
     assert destination == response.headers['Location']
 
-
-def test_logout(client, auth, app):
+@pytest.mark.parametrize(
+    ('username','password','destination'),
+    (
+        ('saved_test_user','saved_test_password', 'http://localhost/index'),
+    ),
+)
+def test_logout(client, auth, username, password, destination):
     with client:
-        auth.login()
-        print(session)
+        auth.login(username=username, password=password)
+        #print(session)
         assert "username" in session
         response = auth.logout()
         assert response.status_code == 302
-        assert "http://localhost/index" == response.headers['Location']
-        print(session)
+        assert destination == response.headers['Location']
+        #print(session)
         assert "username" not in session
 
 
