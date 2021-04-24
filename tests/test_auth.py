@@ -2,7 +2,7 @@ import os
 import tempfile
 import pytest
 import sys
-from flask import current_app
+from flask import session, g
 sys.path.append(os.getcwd())
 
 from habit_app import database, create_app
@@ -10,6 +10,7 @@ from habit_app import database, create_app
 
 def test_root(client):
     assert client.get("/").status_code == 200
+
 
 def test_create_user_successful(client, app):
     assert client.get("/auth/create-account").status_code == 200
@@ -27,6 +28,7 @@ def test_create_user_successful(client, app):
             database.get_db().execute("select * from PASSWORD where username = 'test_user'").fetchone() is not None
         )
 
+
 def test_create_user_username_not_available(client, app):
     assert client.get("/auth/create-account").status_code == 200
     response = client.post("/auth/create-account", data={"username":"saved_test_user", "password":"test_password"})
@@ -39,24 +41,39 @@ def test_create_user_username_not_available(client, app):
         )
 
 
-
-def test_login_successful(client, app):
+def test_login_successful(client):
     assert client.get("/auth/login").status_code == 200
     response = client.post("auth/login", data={"username":"saved_test_user", "password":"saved_test_password"})
     assert response.status_code == 302 # redirect code
     assert "http://localhost/index" == response.headers['Location']
 
-def test_login_fail_password(client, app):
+
+def test_login_fail_password(client):
     assert client.get("/auth/login").status_code == 200
     response = client.post("auth/login", data={"username":"saved_test_user", "password":"saved_test_passw654rord"})
     assert response.status_code == 302
     assert "http://localhost/auth/login" == response.headers['Location']
 
-def test_login_fail_username(client, app):
+
+def test_login_fail_username(client, auth):
     assert client.get("/auth/login").status_code == 200
-    response = client.post("auth/login", data={"username":"saved_tser", "password":"saved_test_password"})
+    response = auth.login(username="saved_tser", password="saved_test_password")
+        #client.post("auth/login", data={"username":"saved_tser", "password":"saved_test_password"})
     assert response.status_code == 302
     assert "http://localhost/auth/login" == response.headers['Location']
+
+
+def test_logout(client, auth, app):
+    with client:
+        auth.login()
+        print(session)
+        assert "username" in session
+        response = auth.logout()
+        assert response.status_code == 302
+        assert "http://localhost/index" == response.headers['Location']
+        print(session)
+        assert "username" not in session
+
 
 
 

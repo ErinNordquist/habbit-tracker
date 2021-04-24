@@ -46,9 +46,7 @@ def login():
                 # redirect to home
                 session.clear()
                 session.permanent = False
-                print(session)
                 session['username'] = form.username.data
-                print(session)
                 return redirect(url_for('routes.index'))
             else:
                 error = "Wrong username/password combination"
@@ -64,3 +62,9 @@ def login():
         #))
         #return redirect(url_for('routes.index'))
     return render_template('login.html',title='Login', form = form)
+
+@bp.route('/logout')
+def logout():
+    """log the user out by clearing the session"""
+    session.clear()
+    return redirect(url_for('routes.index'))
