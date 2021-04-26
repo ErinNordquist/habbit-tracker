@@ -17,3 +17,9 @@ class CreateAccountForm(FlaskForm):
     confirm = PasswordField('Confirm Password')
     submit = SubmitField('Create Account')
 
+class CreateHabitForm(FlaskForm):
+    habit_title = StringField('Title', validators=[DataRequired()])
+    #More to come
+    submit = SubmitField('Create Habit')
+
+
