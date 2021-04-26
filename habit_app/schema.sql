@@ -8,3 +8,21 @@ CREATE TABLE PASSWORD(
     username TEXT PRIMARY KEY,
     password_hash VARCHAR,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP);
+
+DROP TABLE IF EXISTS HABIT;
+CREATE TABLE HABIT(
+    habit_id INTEGER PRIMARY KEY,
+    habit_name VARCHAR,
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    username TEXT,
+    FOREIGN KEY (username) REFERENCES USER (username)
+);
+
+DROP TABLE IF EXISTS HABIT_ACTION;
+CREATE TABLE HABIT_ACTION(
+    username TEXT,
+    habit_id INTEGER,
+    action_dttm DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (username) REFERENCES USER(username),
+    FOREIGN KEY (habit_id) REFERENCES HABIT(habit_id)
+);

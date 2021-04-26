@@ -38,3 +38,15 @@ def init_db():
 def init_app(app):
     app.teardown_appcontext(close_connection)
     init_db()
+
+#Standardized Database Processes
+#Add new username/password
+
+#Get Password hash
+
+#Get all habit data for a user
+    #Get all habits
+    #Get all habit actions
+
+#Add a habit
+#Add a habit action
