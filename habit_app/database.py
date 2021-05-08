@@ -46,6 +46,11 @@ def init_app(app):
 
 #Get all habit data for a user
     #Get all habits
+def get_habits(username):
+    db = get_db()
+    sql = "SELECT * from HABIT where username = (?)"
+    return db.execute(sql, (username,)).fetchall()
+
     #Get all habit actions
 
 #Add a habit
