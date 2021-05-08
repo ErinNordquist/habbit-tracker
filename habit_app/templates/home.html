@@ -2,5 +2,7 @@
 
 {% block content %}
     <a href="/create-habit">Create New Habit</a>
-
+    {% for habit in habit_list %}
+        {{ habit }}
+    {% endfor %}
 {% endblock %}
