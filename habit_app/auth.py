@@ -4,10 +4,40 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from habit_app import login_manager
 from habit_app.database import execute_sql, query_db, get_db
 from habit_app.forms import LoginForm, CreateAccountForm
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
+#from unicode import unicode
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+
+class User(UserMixin):
+    def __init__(self, username, password_hash):
+        self.username = username
+        self.password_hash = password_hash
+        self.authenticated = False
+        self.id = username
+
+    def is_authenticated(self):
+        return self.authenticated
+
+    def get_username(self): return self.username
+
+    def get_id(self): return self.username
+
+
+@login_manager.user_loader
+def load_user(username):
+    db = get_db()
+    lu = db.execute("SELECT * FROM PASSWORD WHERE username = (?)", [username]).fetchone()
+    if lu is None:
+        return None
+    else:
+        return User(lu[0], lu[1])
+
 
 @bp.route('/create-account', methods=['GET','POST'])
 def create_account():
@@ -15,6 +45,7 @@ def create_account():
     if request.method == 'POST':
         error = None
         db = get_db()
+
         #check if username already exists
         if db.execute("SELECT username from user WHERE username = (?)", (form.username.data,)).fetchone() is not None:
             error = "Username is taken."
@@ -35,18 +66,22 @@ def create_account():
 def login():
     form = LoginForm()
     error = None
+    if current_user.is_authenticated:
+        return redirect(url_for('routes.home'))
     if request.method == 'POST':
 
         db = get_db()
 
         if db.execute("SELECT EXISTS(SELECT 1 from PASSWORD where username = (?))", (form.username.data,)).fetchone()[0] == 1:
-            saved_pass_hash= db.execute("SELECT password_hash from PASSWORD where username = (?)", (form.username.data,)).fetchone()[0]
-
-            if check_password_hash(saved_pass_hash, form.password.data):
+            #saved_pass_hash= db.execute("SELECT password_hash from PASSWORD where username = (?)", (form.username.data,)).fetchone()[0]
+            Us = load_user(form.username.data)
+            if Us is not None and check_password_hash(Us.password_hash, form.password.data):
                 # redirect to home
-                session.clear()
-                session.permanent = False
-                session['username'] = form.username.data
+                login_user(Us)
+                #session.clear()
+                #session.permanent = False
+                #session['username'] = form.username.data
+                print(session)
                 return redirect(url_for('routes.index'))
             else:
                 error = "Wrong username/password combination"
