@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, Blueprint, session, url_for, request
 #from habit_app import app
 from flask import g
+from flask_login import login_required
 
 from habit_app.database import query_db, execute_sql, add_habit
 from habit_app.forms import CreateHabitForm
@@ -26,25 +27,16 @@ def check_signed_in():
 @bp.route('/')
 @bp.route('/index')
 def index():
-    #print(session)
-    if 'username' not in session:
-        user = {'username':'Stranger'}
-    else:
-        user = {'username':session['username']}
-        #print(user)
-        #return render_template('habits.html')
-    return render_template('index.html', title = 'Home', user = user)
+    return render_template('index.html', title = 'Home')
 
 @bp.route('/home')
-#@authenticated_resource
+@login_required
 def home():
     #check_signed_in()
-
-    print(session)
     return render_template('home.html',habit_list = ['test1','test2'])
 
 @bp.route('/create-habit', methods =['GET','POST'])
-#@authenticated_resource
+@login_required
 def create_habit():
     #check_signed_in()
 
