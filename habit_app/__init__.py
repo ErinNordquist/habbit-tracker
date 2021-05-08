@@ -16,9 +16,10 @@ def create_app(test_config=None):
         #db = init_db()
         init_app(app)
 
-    from . import auth, routes
+    from . import auth, routes, habit
     app.register_blueprint(routes.bp)
     app.register_blueprint(auth.bp)
+    app.register_blueprint(habit.bp)
 
 
     #from habit_app import routes

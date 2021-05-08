@@ -65,7 +65,7 @@ def login():
     form = LoginForm()
     error = None
     if current_user.is_authenticated:
-        return redirect(url_for('routes.home'))
+        return redirect(url_for('habit.home'))
     if request.method == 'POST':
         db = get_db()
         if db.execute("SELECT EXISTS(SELECT 1 from PASSWORD where username = (?))", (form.username.data,)).fetchone()[0] == 1:
@@ -75,7 +75,7 @@ def login():
                 # redirect to home
                 login_user(Us)
                 print(current_user)
-                return redirect(url_for('routes.home'))
+                return redirect(url_for('habit.home'))
             else:
                 error = "Wrong username/password combination"
         else:
