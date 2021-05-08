@@ -38,3 +38,21 @@ def init_db():
 def init_app(app):
     app.teardown_appcontext(close_connection)
     init_db()
+
+#Standardized Database Processes
+#Add new username/password
+
+#Get Password hash
+
+#Get all habit data for a user
+    #Get all habits
+    #Get all habit actions
+
+#Add a habit
+def add_habit(title, username):
+    db = get_db()
+    sql = "INSERT INTO HABIT(title, username) values(?,?)"
+    db.execute(sql, (title, username))
+    db.commit()
+
+#Add a habit action
