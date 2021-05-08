@@ -49,4 +49,10 @@ def init_app(app):
     #Get all habit actions
 
 #Add a habit
+def add_habit(title, username):
+    db = get_db()
+    sql = "INSERT INTO HABIT(title, username) values(?,?)"
+    db.execute(sql, (title, username))
+    db.commit()
+
 #Add a habit action
