@@ -9,7 +9,6 @@ from habit_app import login_manager
 from habit_app.database import execute_sql, query_db, get_db
 from habit_app.forms import LoginForm, CreateAccountForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
-#from unicode import unicode
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -57,7 +56,6 @@ def create_account():
                         (form.username.data, generate_password_hash(form.password.data, "sha256")))
             return redirect(url_for('auth.login'))
         else:
-           #print(error)
             flash(error)
             return redirect(url_for('auth.create_account'))
     return render_template('create_account.html', title='Create Account', form=form)
@@ -69,20 +67,15 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('routes.home'))
     if request.method == 'POST':
-
         db = get_db()
-
         if db.execute("SELECT EXISTS(SELECT 1 from PASSWORD where username = (?))", (form.username.data,)).fetchone()[0] == 1:
             #saved_pass_hash= db.execute("SELECT password_hash from PASSWORD where username = (?)", (form.username.data,)).fetchone()[0]
             Us = load_user(form.username.data)
             if Us is not None and check_password_hash(Us.password_hash, form.password.data):
                 # redirect to home
                 login_user(Us)
-                #session.clear()
-                #session.permanent = False
-                #session['username'] = form.username.data
-                print(session)
-                return redirect(url_for('routes.index'))
+                print(current_user)
+                return redirect(url_for('routes.home'))
             else:
                 error = "Wrong username/password combination"
         else:
@@ -91,15 +84,12 @@ def login():
     if error is not None:
         flash(error)
         return redirect(url_for('auth.login'))
-
-        #flash('Login requested for user {}, remember me={}'.format(
-           # form.username.data, form.remember_me.data
-        #))
-        #return redirect(url_for('routes.index'))
     return render_template('login.html',title='Login', form = form)
 
 @bp.route('/logout')
+@login_required
 def logout():
-    """log the user out by clearing the session"""
-    session.clear()
-    return redirect(url_for('routes.index'))
+    """log the user out"""
+    logout_user()
+    print(session)
+    return redirect(url_for('auth.login'))
