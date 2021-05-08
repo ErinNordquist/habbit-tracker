@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h1>Hello, {{ current_user.username }}!</h1>
     <a href="/create-habit">Create New Habit</a>
     {% for habit in habit_list %}
-        {{ habit }}
+        <li>{{ habit }}</li>
     {% endfor %}
 {% endblock %}
