@@ -1,17 +1,17 @@
 import functools
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from habit_app import login_manager
+#from habit_app import login_manager
 from habit_app.database import execute_sql, query_db, get_db
 from habit_app.forms import LoginForm, CreateAccountForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
-
+#login_manager = g.login_manager
 
 class User(UserMixin):
     def __init__(self, username, password_hash):
@@ -27,6 +27,7 @@ class User(UserMixin):
 
     def get_id(self): return self.username
 
+login_manager = LoginManager()
 
 @login_manager.user_loader
 def load_user(username):
