@@ -75,7 +75,7 @@ def login():
             if Us is not None and check_password_hash(Us.password_hash, form.password.data):
                 # redirect to home
                 login_user(Us)
-                print(current_user)
+                #print(current_user)
                 return redirect(url_for('habit.home'))
             else:
                 error = "Wrong username/password combination"
