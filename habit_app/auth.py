@@ -1,7 +1,7 @@
 import functools
-
+from flask_cors import CORS
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app,jsonify,Response
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -11,7 +11,9 @@ from habit_app.forms import LoginForm, CreateAccountForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+
 #login_manager = g.login_manager
+
 
 class User(UserMixin):
     def __init__(self, username, password_hash):
@@ -27,7 +29,9 @@ class User(UserMixin):
 
     def get_id(self): return self.username
 
+
 login_manager = LoginManager()
+
 
 @login_manager.user_loader
 def load_user(username):
@@ -42,10 +46,12 @@ def load_user(username):
 @bp.route('/create-account', methods=['GET','POST'])
 def create_account():
     form = CreateAccountForm()
+    print(form.username.data)
+    response = Response()
     if request.method == 'POST':
         error = None
         db = get_db()
-
+        print(request.data)
         #check if username already exists
         if db.execute("SELECT username from user WHERE username = (?)", (form.username.data,)).fetchone() is not None:
             error = "Username is taken."
@@ -55,10 +61,11 @@ def create_account():
             db.commit()
             execute_sql("INSERT INTO PASSWORD(username, password_hash) values(?,?)",
                         (form.username.data, generate_password_hash(form.password.data, "sha256")))
-            return redirect(url_for('auth.login'))
+            print('account created')
+            response.status_code = 200
         else:
-            flash(error)
-            return redirect(url_for('auth.create_account'))
+            response.status_code = 403
+        return response
     return render_template('create_account.html', title='Create Account', form=form)
 
 @bp.route('/login', methods=['GET','POST'])
@@ -94,3 +101,4 @@ def logout():
     logout_user()
     print(session)
     return redirect(url_for('auth.login'))
+#CORS(bp)
