@@ -29,6 +29,7 @@ class CreateAccount(Resource):#/auth/create-account
                 db.commit()
                 db.execute("INSERT INTO PASSWORD(username, password_hash) values(?,?)",
                             (username, generate_password_hash(password, "sha256")))
+                db.commit()
                 print('account created')
                 response = {}, 200
             else:
@@ -51,8 +52,8 @@ class Login(Resource):
                 #Us = load_user(form.username.data)
                 if check_password_hash(saved_pass_hash, password):
                     access_token = create_access_token(identity = username)
-
-                    return jsonify(access_token=access_token)
+                    print(access_token)
+                    return {"access_token": access_token}, 200
                 else:
                     error = "Wrong username/password combination"
             else:
@@ -60,7 +61,7 @@ class Login(Resource):
 
         if error is not None:
 
-            return jsonify(error=error)
+            return jsonify(error=error), 403
 
 
 class Logout(Resource):
