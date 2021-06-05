@@ -8,6 +8,7 @@ import CreateUserForm from "./components/CreateUserForm";
 import LoginForm from "./components/LoginForm";
 import NavBar from "./components/NavBar";
 import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
+import HabitTable from "./components/HabitTable";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -24,6 +25,9 @@ function App() {
                 <Link to="/auth/login">
                     <Button>Login</Button>
                 </Link>
+                <Link to="/home">
+                    <Button>Home</Button>
+                </Link>
 
             </nav>
             <Switch>
@@ -32,6 +36,9 @@ function App() {
                 </Route>
                 <Route path="/auth/login" exact>
                     <LoginForm/>
+                </Route>
+                <Route path="/home">
+                    <HabitTable/>
                 </Route>
             </Switch>
         </BrowserRouter>

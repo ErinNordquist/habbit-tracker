@@ -1,12 +1,19 @@
 import {useState, useRef} from "react";
 import {TextField, Button} from "@material-ui/core";
 import {useForm, Controller} from "react-hook-form";
+import axios from "axios";
+import {useHistory} from "react-router-dom";
 
 function LoginForm(props) {
-    const { register, handleSubmit,getValues, watch, control, formState: { errors, isValid }, } = useForm();
+    const { register, handleSubmit,getValues, watch, control, formState: { errors, isValid }, setError} = useForm();
+    let history = useHistory();
 
     const onSubmit= (data) => {console.log(data);console.log(errors);
         console.log("backend post");
+        axios.post(`http://localhost:5000/auth/login`, data).then(function (response){
+            console.log(response);
+            history.push("/home");
+        });
     }
     return (
         <div>
