@@ -4,7 +4,7 @@ from flask_jwt_extended import JWTManager
 from database import init_db, get_db
 from flask_cors import CORS
 app = Flask(__name__)
-CORS(app)
+
 # initialize database
 from flask import g
 app.config["JWT_SECRET_KEY"] = "ralltope"
@@ -38,10 +38,12 @@ class HelloWorld(Resource):
         return {'hello': 'world'}
 
 from auth import CreateAccount, Login
+from habit import getHabits
 api.add_resource(HelloWorld, '/<string:name>')
 api.add_resource(CreateAccount, '/auth/create-account')
 api.add_resource(Login, '/auth/login')
-
+api.add_resource(getHabits, '/home')
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 if __name__=='__main__':
     app.run(debug=True)
