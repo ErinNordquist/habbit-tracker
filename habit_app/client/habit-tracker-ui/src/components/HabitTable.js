@@ -3,6 +3,7 @@ import {Button, Table, TableHead, Checkbox} from "@material-ui/core";
 import axios from "axios";
 import habitTableActions from "../actions/habitTableActions"
 import {useHistory} from "react-router-dom";
+import authHeader from "../actions/auth-header";
 
 
 function HabitTable(props) {
@@ -55,7 +56,6 @@ function HabitTable(props) {
 
     const findHabit = (attribute, value) => {
         for (let [index, habit] of habits.entries()) {
-            console.log(String(habit[attribute]));
             if (habit[attribute] == value) {
                 return index;
             }
@@ -66,13 +66,24 @@ function HabitTable(props) {
     const handleChange = (event) => {
         //send request with changes
             //add to date list somehow
-        console.log(findHabit("habit_id", event.target.name));
-        console.log(event.target);
-        if (event.target.checked) {
-            event.target.checked = false;
-        } else {
-            event.target.checked = true;
+        const habitIndex = findHabit("habit_id", event.target.name);
+        let index = -1;
+        let action = 'add';
+        if (habits[habitIndex].habit_action.includes(event.target.value)) {
+            index = habits[habitIndex].habit_action.indexOf(event.target.value);
+            action = 'delete';
         }
+        const promise = axios.post("http://localhost:5000/"+"update", {headers: authHeader(),
+            body: {'habit_id':event.target.name, 'habit_action':event.target.value, 'action':action}});
+        const dataPromise = promise.then((response) => {
+            let newHabits = JSON.parse(JSON.stringify(habits));
+            if (index > -1){
+                newHabits[habitIndex].habit_action.splice(index, 1);
+            } else {
+                newHabits[habitIndex].habit_action.push(event.target.value);
+            }
+            setHabits(newHabits);
+        });
     }
 
     return (
@@ -92,10 +103,7 @@ function HabitTable(props) {
                         <tr>
 
                             {dates.map((dt) => (
-                                <th>
-                                    <td date={formatDate(dt)}>{dt.getDate() }</td>
-
-                                </th>
+                                <th date={formatDate(dt)}>{dt.getDate() }</th>
                             ))}
                         </tr>
                     </thead>
@@ -106,7 +114,7 @@ function HabitTable(props) {
                             <td>{h.habit_title}</td>
                             {formatedDates.map((dt) => (
                                 <td date={dt}>
-                                    <Checkbox name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onChange={handleChange}/>
+                                    <Checkbox name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onClick={handleChange}/>
                                 </td>
                             ))}
                         </tr>

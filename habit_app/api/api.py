@@ -47,11 +47,12 @@ class HelloWorld(Resource):
 
 
 from auth import CreateAccount, Login
-from habit import GetHabits
+from habit import GetHabits, UpdateHabitActions
 api.add_resource(HelloWorld, '/<string:name>')
 api.add_resource(CreateAccount, '/auth/create-account')
 api.add_resource(Login, '/auth/login')
 api.add_resource(GetHabits, '/home')
+api.add_resource(UpdateHabitActions, '/update')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 #add starting data

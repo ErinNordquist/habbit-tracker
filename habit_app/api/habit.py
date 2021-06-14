@@ -49,6 +49,15 @@ class GetHabits(Resource): #/home
         print(habit_resp)
         return habit_resp, 200
 
+
+class UpdateHabitActions(Resource): #/update
+    @jwt_required()
+    def post(self):
+        print('update received')
+        db = database.get_db()
+        print(request)
+        return 200
+
 # class GetHabitActions(Resource): # /get-habit-actions ?
 #     """
 #     This Class is for fetching data primarily.

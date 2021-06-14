@@ -13,6 +13,11 @@ function getHabits() {
     return dataPromise;
 };
 
+function updateHabitAction(body) {
+    const promise = axios.post(API_URL+"___", {headers: authHeader(), body: body});
+    const dataPromise = promise.then()
+}
+
 function getHabitActions() {
     console.log('called getHabitActions');
     //const promise = axios.get(API_URL+)
