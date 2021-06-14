@@ -1,50 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
 import {useState} from "react";
-import {Button} from "@material-ui/core";
-//import HabitTable from "./components/HabitTable";
-import Routes from './Routes';
+import HabitTable from "./components/HabitTable";
 import CreateUserForm from "./components/CreateUserForm";
 import LoginForm from "./components/LoginForm";
-import NavBar from "./components/NavBar";
+//import NavBar from "./components/NavBar";
 import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
-import HabitTable from "./components/HabitTable";
+import AuthActions from "./actions/AuthActions";
+import {StyledButton} from "./components/styles"
 
 function App() {
-    const [loggedIn, setLoggedIn] = useState(false);
-
+    AuthActions.logout();
+    console.log(localStorage);
+    const [user, setUser] = useState(AuthActions.getCurrentUser());
+    const [loggedIn, setLoggedIn] = useState(user !== null);
+    console.log(user);
+    console.log(loggedIn);
 
   return (
     <div className="App">
         <BrowserRouter>
-            <nav>
+            <div className="App-header">
+                <nav>
+                    Habit Tracker
+                    <Link to="/auth/create-account">
+                        <StyledButton>Create Account</StyledButton>
+                    </Link>
+                    <Link to="/auth/login">
+                        <StyledButton>Login</StyledButton>
+                    </Link>
+                    <Link to="/home">
+                        <StyledButton>Home</StyledButton>
+                    </Link>
 
-                <Link to="/auth/create-account">
-                    <Button>Create Account</Button>
-                </Link>
-                <Link to="/auth/login">
-                    <Button>Login</Button>
-                </Link>
-                <Link to="/home">
-                    <Button>Home</Button>
-                </Link>
-
-            </nav>
-            <Switch>
-                <Route path="/auth/create-account">
-                    <CreateUserForm/>
-                </Route>
-                <Route path="/auth/login" exact>
-                    <LoginForm/>
-                </Route>
-                <Route path="/home">
-                    <HabitTable/>
-                </Route>
-            </Switch>
+                </nav>
+            </div>
+            <div>
+                <Switch>
+                    <Route path="/auth/create-account">
+                        <CreateUserForm/>
+                    </Route>
+                    <Route props = {setUser} path="/auth/login" exact>
+                        <LoginForm/>
+                    </Route>
+                    <Route path="/home">
+                        <HabitTable/>
+                    </Route>
+                </Switch>
+            </div>
         </BrowserRouter>
-      <header className="App-header">
-        <NavBar></NavBar>
-      </header>
     </div>
 
   );

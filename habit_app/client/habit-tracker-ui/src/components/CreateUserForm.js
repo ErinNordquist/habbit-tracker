@@ -1,4 +1,4 @@
-import {useState, useRef} from "react";
+import {useRef} from "react";
 import {TextField, Button} from "@material-ui/core";
 import {useForm, Controller} from "react-hook-form";
 import axios from "axios";
@@ -16,15 +16,14 @@ function CreateUserForm(props) {
 
     //TODO: Remove console.log(data) once backend communication is working
     const onSubmit= (data) => {
-        console.log(data);
-        console.log(errors);
+        //console.log(data);
+        //console.log(errors);
         lastSubmission = data.username;
         axios.post(`http://localhost:5000/auth/create-account`, data).then(function (response){
             console.log(response);
             history.push("/auth/login");
         }).catch(function (error) {
-            console.log(error.message);
-            console.log(lastSubmission);
+            //console.log(lastSubmission);
             setError("username",{type:"validate",message:"Username is Taken"})
 
         });
