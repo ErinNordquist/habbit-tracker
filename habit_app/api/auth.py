@@ -58,11 +58,12 @@ class Login(Resource):
                 error = "Wrong username"
 
         if error is not None:
-            print(error)
+            #print(error)
             return {"error": error}, 200
 
 
-class Logout(Resource):
-    def post(self):#/auth/logout
-        """log the user out"""
-        return
+# class Logout(Resource):
+#     @jwt_required()
+#     def post(self):#/auth/logout
+#         """log the user out"""
+#         return

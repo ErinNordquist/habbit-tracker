@@ -51,29 +51,25 @@ class GetHabits(Resource): #/home
         return habit_resp, 200
 
 
-class UpdateHabitActions(Resource): #/update/<string:habit_id>-<string:habit_action>'
+class Habit(Resource): #/habit
     @jwt_required()
-    def post(self, habit_id, habit_action):
+    def post(self):
         db = database.get_db()
-        #update db
-        sql = "INSERT INTO HABIT_ACTION(username,habit_id, action_dttm) values (?,?,?)"
-
-        db.execute(sql, (get_jwt_identity(),habit_id,habit_action))
+        #title, username
+        sql = "INSERT INTO HABIT (username, title) values (?,?)"
+        db.execute(sql, (get_jwt_identity(), request.json.get('habit_title')))
         db.commit()
+        habit_ids = db.execute("SELECT habit_id FROM HABIT WHERE username = (?) AND title = (?)",
+                               (get_jwt_identity(), request.json.get('habit_title'))).fetchall()
+        habit_ids = [x[0] for x in habit_ids]
+        return {'habit_id':max(habit_ids), 'habit_title': request.json.get('habit_title')}, 200
 
-        return 200
+    #@jwt_required()
+    #def delete(self):
 
-    @jwt_required()
-    def delete(self, habit_id, habit_action):
-        """to remove a habit action"""
-        db = database.get_db()
-        # update db
-        sql = "DELETE FROM HABIT_ACTION WHERE username = (?) and habit_id = (?) and action_dttm = (?)"
 
-        db.execute(sql, (get_jwt_identity(), habit_id, habit_action))
-        db.commit()
 
-        return 200
+
 
 # class GetHabitActions(Resource): # /get-habit-actions ?
 #     """
