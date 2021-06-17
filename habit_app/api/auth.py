@@ -50,7 +50,7 @@ class Login(Resource):
                 # Us = load_user(form.username.data)
                 if check_password_hash(saved_pass_hash, password):
                     access_token = create_access_token(identity = username)
-                    print(access_token)
+                    #print(access_token)
                     return {"access_token": access_token}, 200
                 else:
                     error = "Wrong username/password combination"

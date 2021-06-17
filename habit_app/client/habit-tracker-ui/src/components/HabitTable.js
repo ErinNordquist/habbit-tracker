@@ -34,20 +34,13 @@ function HabitTable(props) {
 
     let history = useHistory();
 
-
     const reloadHabits = () => {
-        habitTableActions.getHabits().then((data) => {
+        habitTableActions.getHabits(formatedDates[0],formatedDates[6]).then((data) => {
             setHabits(data.habit_data);
-            //console.log("habits:")
-            //console.log(habits);
+            console.log(habits);
         }).catch(function (error) {
-            //console.log(error);
             history.push('/auth/login')
         });
-    }
-
-    const getHabitActions = () => {
-
     }
 
     useEffect(() =>{
@@ -64,8 +57,7 @@ function HabitTable(props) {
     }
 
     const handleChange = (event) => {
-        //send request with changes
-            //add to date list somehow
+        //locate habit that event refers to
         const habitIndex = findHabit("habit_id", event.target.name);
         let index = -1;
         let action = 'add';
@@ -73,9 +65,9 @@ function HabitTable(props) {
             index = habits[habitIndex].habit_action.indexOf(event.target.value);
             action = 'delete';
         }
-        const promise = axios.post("http://localhost:5000/"+"update", {
-            body: {'habit_id':event.target.name, 'habit_action':event.target.value, 'action':action}},
-            {headers: authHeader()});
+        //send request to backend to make change in database
+        const promise = habitTableActions.updateHabitAction(event.target.name,event.target.value, action);
+        //once we get a successful response, modify the info on the front end to match what is now in the db
         const dataPromise = promise.then((response) => {
             let newHabits = JSON.parse(JSON.stringify(habits));
             if (index > -1){

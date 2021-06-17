@@ -15,10 +15,10 @@ function LoginForm(props) {
         axios.post(`http://localhost:5000/auth/login`, data).then(function (response){
             //console.log();
             //console.log(response.data.hasOwnProperty('access_token'));
-            console.log(response.data);
+            //console.log(response.data);
             if (response.data.hasOwnProperty('error')){
                 setError("username",{type:"validate",message:response.data.error})
-                console.log(errors.username);
+                //console.log(errors.username);
             } else {
                 localStorage.setItem("user", JSON.stringify(response.data));
                 history.push("/home");
