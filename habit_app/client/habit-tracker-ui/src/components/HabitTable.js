@@ -73,8 +73,9 @@ function HabitTable(props) {
             index = habits[habitIndex].habit_action.indexOf(event.target.value);
             action = 'delete';
         }
-        const promise = axios.post("http://localhost:5000/"+"update", {headers: authHeader(),
-            body: {'habit_id':event.target.name, 'habit_action':event.target.value, 'action':action}});
+        const promise = axios.post("http://localhost:5000/"+"update", {
+            body: {'habit_id':event.target.name, 'habit_action':event.target.value, 'action':action}},
+            {headers: authHeader()});
         const dataPromise = promise.then((response) => {
             let newHabits = JSON.parse(JSON.stringify(habits));
             if (index > -1){
