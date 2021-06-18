@@ -11,6 +11,7 @@ sys.path.append("D:\habit-tracker\habit_app\\api")
 import habit_app.api as api
 from habit_app.api.api import create_app
 from habit_app.api.database import init_db,get_db
+import habit_app.api
 import habit_app.api.auth as auth_file
 
 

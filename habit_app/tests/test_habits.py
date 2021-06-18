@@ -30,7 +30,7 @@ def test_add_habit(client, auth, habit_titles, outcome):
             assert response.json['habit_title'] == h
 
 
-#TODO: test deleting a habit (not yet implemented)
+
 @pytest.mark.parametrize(
     ('habit_title', 'habit_id', 'outcome'),
     (
@@ -52,3 +52,23 @@ def test_delete_habit(client, auth, habit_title, habit_id, outcome):
         sql = "SELECT username FROM HABIT_ACTION WHERE habit_id = (?)"
         # print(db.execute(sql, (habit_id,)).fetchall())
         assert username not in db.execute(sql, (habit_id,)).fetchall()
+
+@pytest.mark.parametrize(
+    ('user', 'password', 'expected_data', 'start_date', 'end_date', 'status'),
+    (
+        ('www', 'xxx', [], '2020-01-10', '2020-01-18', 200),
+        ('www', 'xxx',
+         [{'habit_id': 1, 'habit_title': 'placeholder habit 1', 'habit_action': ['2021-06-12', '2021-06-13']},
+          {'habit_id': 2, 'habit_title': 'placeholder habit 2', 'habit_action': ['2021-06-13']}],
+         '2021-06-12', '2021-06-19', 200),
+        ('zzz', 'aaa',
+         [{'habit_id': 3, 'habit_title': 'habit 1', 'habit_action': ['2021-06-16']}],
+         '2021-06-12', '2021-06-19',200),
+    )
+)
+def test_get_habits(client, auth, user, password, expected_data, start_date, end_date, status):
+    with client:
+        auth.login(username = user, password = password)
+        response = client.get(f"home/{start_date}&{end_date}", headers={'Authorization': 'Bearer ' + auth.access_token})
+        assert response.status_code == status
+        assert expected_data == response.json['habit_data']
