@@ -11,7 +11,7 @@ values
 ('www','placeholder habit 1', '2021-06-11'),
 ('www','placeholder habit 2', '2021-06-04');
 
-INSERT INTO HABIT_ACTION (username, habit_id, action_dttm)
+INSERT INTO HABIT_ACTION (username, habit_id, action_dt)
 values
 ('www', 1, DATE('2020-04-21')),
 ('www', 1, DATE('2021-06-12')),

@@ -1,9 +1,7 @@
 import pytest
-from flask import session
 from habit_app.api import database
 from flask_jwt_extended import get_jwt_identity
 
-#TODO: Test adding a habit (just starting to be impleneted)
 
 @pytest.mark.parametrize(
     ('habit_titles', 'outcome'),
