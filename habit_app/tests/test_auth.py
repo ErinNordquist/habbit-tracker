@@ -22,7 +22,7 @@ def test_root(client):
 def test_create_user(client, app, username, password, destination, outcome):
     response = client.post("/auth/create-account", json={"username": username, "password": password})
     if outcome == 'succeed':
-        assert response.status_code == 200
+        assert response.status_code == 204
     else:
         assert response.status_code == 403
     # (response.status_code)
@@ -50,14 +50,13 @@ def test_create_user(client, app, username, password, destination, outcome):
     ('username', 'password', 'status','body'),
     (
             ('www', 'xxx', 200, b'access_token'),
-            ('saved_test_user', 'saved_test_passw654ord', 200, b'error'),
-            ('saved_tser', 'saved_test_password',200, b'error'),
+            ('www', 'saved_test_passw654ord', 200, b'error'),
+            ('saved_tser', 'saved_test_password', 200, b'error'),
     ),
 )
 def test_login(client, auth, username, password, status, body):
-    #ssert client.post("/auth/login").status_code == status
     response = auth.login(username=username, password=password)
-    assert response.status_code == status  # redirect code
+    assert response.status_code == status
     assert body in response.data
 
 

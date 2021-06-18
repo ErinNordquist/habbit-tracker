@@ -13,27 +13,24 @@ class CreateAccount(Resource):  # /auth/create-account
     def post(self):
         username = request.json.get("username", None)
         password = request.json.get("password", None)
-        if request.method == 'POST':
-            error = None
-            db = database.get_db()
-            #print(request.data)
-            # check if username already exists
-            if db.execute("SELECT username from user WHERE username = (?)", (username,)).fetchone() is not None:
-                error = "Username is taken."
+        error = None
+        db = database.get_db()
 
-            if error is None:
-                db.execute("INSERT INTO USER(username) values (?)", (username,))
-                db.commit()
-                db.execute("INSERT INTO PASSWORD(username, password_hash) values(?,?)",
-                            (username, generate_password_hash(password, "sha256")))
-                db.commit()
-                print('account created for', username)
-                response = {}, 200
-            else:
-                response = {"error": 'Username is taken'}, 403
+        # check if username already exists
+        if db.execute("SELECT username from user WHERE username = (?)", (username,)).fetchone() is not None:
+            error = "Username is taken."
+
+        if error is None:
+            db.execute("INSERT INTO USER(username) values (?)", (username,))
+            db.commit()
+            db.execute("INSERT INTO PASSWORD(username, password_hash) values(?,?)",
+                        (username, generate_password_hash(password, "sha256")))
+            db.commit()
+            print('account created for', username)
+            response = {}, 204
         else:
-            print(request)
-            response = {}, 200
+            response = {"error": 'Username is taken'}, 403
+
         return response
 
 
