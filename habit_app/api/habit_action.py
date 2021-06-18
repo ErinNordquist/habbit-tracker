@@ -9,8 +9,7 @@ import pandas as pd
 
 from flask_restful import Resource
 
-def get_habit_actions_helper(db, username, habit_id):
-
+#def get_habit_actions_helper(db, username, habit_id):
 
 
 class UpdateHabitActions(Resource): #/update/<string:habit_id>&<string:habit_action>'
@@ -26,19 +25,20 @@ class UpdateHabitActions(Resource): #/update/<string:habit_id>&<string:habit_act
 
         db.execute(sql, (get_jwt_identity(),habit_id,habit_action))
         db.commit()
-
-        return 204
+        return {}, 204
 
     @jwt_required()
     def delete(self, habit_id, habit_action):
         """to remove a habit action"""
-        #TODO: Check if action exists, if not return 404
+        # TODO: Check if date is formatted correctly, if not return 400
+        # TODO: Check if action exists, if not return 404
 
         db = database.get_db()
+
         # update db
         sql = "DELETE FROM HABIT_ACTION WHERE username = (?) and habit_id = (?) and action_dt = (?)"
 
         db.execute(sql, (get_jwt_identity(), habit_id, habit_action))
         db.commit()
 
-        return 204
+        return {}, 204
