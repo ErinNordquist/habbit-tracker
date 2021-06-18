@@ -51,7 +51,7 @@ class GetHabits(Resource): #/home
         return habit_resp, 200
 
 
-class Habit(Resource): #/habit
+class AddHabit(Resource): #/habit
     @jwt_required()
     def post(self):
         db = database.get_db()
@@ -62,10 +62,22 @@ class Habit(Resource): #/habit
         habit_ids = db.execute("SELECT habit_id FROM HABIT WHERE username = (?) AND title = (?)",
                                (get_jwt_identity(), request.json.get('habit_title'))).fetchall()
         habit_ids = [x[0] for x in habit_ids]
-        return {'habit_id':max(habit_ids), 'habit_title': request.json.get('habit_title')}, 200
+        return {'habit_id': max(habit_ids), 'habit_title': request.json.get('habit_title')}, 200
 
-    #@jwt_required()
-    #def delete(self):
+
+class ModHabit(Resource):  # /habit/<int:habit_id>
+    @jwt_required()
+    def delete(self, habit_id):
+        db = database.get_db()
+        sql = "DELETE FROM HABIT WHERE username = (?) and habit_id = (?)"
+        db.execute(sql, (get_jwt_identity(), habit_id))
+        sql = "DELETE FROM HABIT_ACTION WHERE username =(?) and habit_id = (?)"
+        db.execute(sql, (get_jwt_identity(), habit_id))
+        db.commit()
+
+        return 200
+
+
 
 
 
