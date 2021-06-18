@@ -10,8 +10,6 @@ from flask_cors import CORS
 from flask import g
 
 
-
-
 def create_app(config):
     app = Flask(__name__)
 
@@ -38,17 +36,9 @@ def create_app(config):
 
     class HelloWorld(Resource):
         def get(self, name):
-            db = database.get_db()
-            user = db.execute("SELECT username from user WHERE username = (?)", (name,)).fetchone()
             return {
-                'user': user
+                'user': 'Hello'
             }
-
-        def post(self, name):
-            db = database.get_db()
-            db.execute("INSERT INTO USER(username) values (?)", (name,))
-            db.commit()
-            return {'hello': 'world'}
 
     from auth import CreateAccount, Login
     from habit import GetHabits, AddHabit, ModHabit
