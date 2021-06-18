@@ -4,9 +4,9 @@ import pytest
 import sys
 from flask import current_app
 from flask_login import LoginManager
-sys.path.append(os.getcwd())
+#sys.path.append(os.getcwd())
 
-from habit_app import database, create_app, auth as auth_module
+from habit_app.api import database, api, auth
 
 with open(os.path.join(os.path.dirname(__file__), 'test_data.sql'), 'rb') as f:
     _test_data_sql = f.read().decode("utf8")
@@ -16,12 +16,12 @@ with open(os.path.join(os.path.dirname(__file__), 'test_data.sql'), 'rb') as f:
 def app():
     """Create a new app instance for each test."""
     db_fd, db_path = tempfile.mkstemp()
-    app = create_app({"TESTING": True, "DATABASE": db_path})
+    app = api.create_app({"TESTING": True, "DATABASE": db_path})
 
     with app.app_context():
         database.init_db()
         database.get_db().executescript(_test_data_sql)
-        auth_module.login_manager.init_app(app)
+        auth.login_manager.init_app(app)
 
     yield app
 

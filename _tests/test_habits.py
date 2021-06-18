@@ -1,9 +1,7 @@
-import os
-import sys
 import pytest
 from flask import session
-from habit_app import database
-from flask_login import current_user
+from archive import database
+
 
 #TODO: Test adding a habit (just starting to be impleneted)
 
