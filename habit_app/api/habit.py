@@ -28,7 +28,7 @@ def get_habits_helper(db, start_date, end_date):
         end_date: str; represents the last date (inclusive) in search range
     """
     sql = f"""SELECT * FROM habit_action 
-    WHERE username = (?) AND action_dttm BETWEEN DATE('{start_date}') AND DATE('{end_date}')"""
+    WHERE username = (?) AND action_dt BETWEEN DATE('{start_date}') AND DATE('{end_date}')"""
     return db.execute(sql, (get_jwt_identity(),)).fetchall()
 
 
@@ -68,6 +68,7 @@ class AddHabit(Resource): #/habit
 class ModHabit(Resource):  # /habit/<int:habit_id>
     @jwt_required()
     def delete(self, habit_id):
+        #TODO: Check if habit exists, if not return 404
         db = database.get_db()
         sql = "DELETE FROM HABIT WHERE username = (?) and habit_id = (?)"
         db.execute(sql, (get_jwt_identity(), habit_id))
