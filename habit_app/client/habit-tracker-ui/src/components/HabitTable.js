@@ -9,7 +9,6 @@ import CreateHabitForm from "./CreateHabitForm";
 
 
 function HabitTable(props) {
-    const [cells, setCells] = useState(0);
     const [habits,setHabits] = useState([]);
     const minusDays = (date, days) => {
         date.setDate(date.getDate() - days);
@@ -37,11 +36,17 @@ function HabitTable(props) {
     let history = useHistory();
 
     const reloadHabits = () => {
-        habitTableActions.getHabits(formatedDates[0],formatedDates[6]).then((data) => {
+        habitTableActions.getHabits(formatedDates[0],formatedDates[6]).then((response) => {
+            let data = response.data
             setHabits(data.habit_data);
             //console.log(habits);
         }).catch(function (error) {
-            history.push('/auth/login')
+            console.log(JSON.stringify(error))
+            //log out if unauthorized (expired token)
+            if (error.response.status === 401) {
+                props.logOutUser()
+                history.push('/auth/login')
+            }
         });
     }
 

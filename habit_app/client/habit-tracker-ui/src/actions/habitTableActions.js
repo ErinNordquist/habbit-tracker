@@ -9,14 +9,7 @@ function getHabits(start_date, end_date) {
     //console.log(authHeader());
 
     const promise = axios.get(API_URL+"home"+"/"+start_date+"&"+end_date, {headers: authHeader()});
-    const dataPromise = promise.then((response) => {
-        //console.log(response);
-        return response.data;
-    }).catch((response) => {
-        console.log(response)
-        useHistory().push('/');
-    });
-    return dataPromise;
+    return promise;
 };
 
 function updateHabitAction(habit_id, habit_action, action) {
