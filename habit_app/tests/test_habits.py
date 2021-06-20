@@ -18,7 +18,7 @@ def test_add_habit(client, auth, habit_titles, outcome):
             #assert client.post('/add-habit').status_code == 200
             data ={'habit_title': h}
             response = client.post("/habit", json=data, headers={'Authorization':'Bearer '+auth.access_token})
-            assert response.status_code == 200
+            assert response.status_code == 201
 
             current_habits = database.get_db().execute("SELECT title FROM HABIT WHERE username = (?)",(username,)).fetchall()
 
