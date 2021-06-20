@@ -56,7 +56,10 @@ def test_delete_habit(client, auth, habit_title, habit_id, outcome):
 @pytest.mark.parametrize(
     ('user', 'password', 'expected_data', 'start_date', 'end_date', 'status'),
     (
-        ('www', 'xxx', [], '2020-01-10', '2020-01-18', 200),
+        ('www', 'xxx',
+         [{'habit_id':1, 'habit_title':'placeholder habit 1', 'habit_action': ['']},
+          {'habit_id':2, 'habit_title':'placeholder habit 2', 'habit_action': ['']}]
+        , '2020-01-10', '2020-01-18', 200),
         ('www', 'xxx',
          [{'habit_id': 1, 'habit_title': 'placeholder habit 1', 'habit_action': ['2021-06-12', '2021-06-13']},
           {'habit_id': 2, 'habit_title': 'placeholder habit 2', 'habit_action': ['2021-06-13']}],
