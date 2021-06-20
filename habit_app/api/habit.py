@@ -39,15 +39,16 @@ class GetHabits(Resource): #/home
         db = database.get_db()
         habit_titles = get_habit_title_helper(db)
         habit_titles_df = pd.DataFrame(habit_titles, columns=['habit_id', 'habit_title'])
-
+        #print(habit_titles_df)
         habit_actions = get_habits_helper(db, start_date, end_date)
         habit_actions_df = pd.DataFrame(habit_actions, columns=['username','habit_id','habit_action'])
-        habit_data_df = habit_titles_df.merge(habit_actions_df, on='habit_id')
+        #print(habit_actions_df)
+        habit_data_df = habit_titles_df.merge(habit_actions_df, on='habit_id', how='outer').fillna("")
         #print(habit_data_df)
         habit_data_df = habit_data_df.groupby(['habit_id', 'habit_title'])['habit_action'].apply(list).reset_index(drop=False)
 
         habit_resp = {'habit_data': habit_data_df.to_dict(orient='records')}
-        #print(habit_resp)
+        print(habit_resp)
         return habit_resp, 200
 
 
@@ -62,7 +63,7 @@ class AddHabit(Resource): #/habit
         habit_ids = db.execute("SELECT habit_id FROM HABIT WHERE username = (?) AND title = (?)",
                                (get_jwt_identity(), request.json.get('habit_title'))).fetchall()
         habit_ids = [x[0] for x in habit_ids]
-        return {'habit_id': max(habit_ids), 'habit_title': request.json.get('habit_title')}, 200
+        return {'habit_id': max(habit_ids), 'habit_title': request.json.get('habit_title')}, 201
 
 
 class ModHabit(Resource):  # /habit/<int:habit_id>
