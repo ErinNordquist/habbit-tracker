@@ -18,7 +18,7 @@ def create_app(config):
     for k,v in config.items():
         app.config[k] = v
     app.config["JWT_SECRET_KEY"] = "ralltope"
-    app.config["JWT_TOKEN_LOCATION"] = "headers"
+    app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]
     app.config["JWT_COOKIE_SECURE"] = False
     app.config['JWT_COOKIE_CSRF_PROTECT'] = False
     app.config['JWT_CSRF_IN_COOKIES'] = False

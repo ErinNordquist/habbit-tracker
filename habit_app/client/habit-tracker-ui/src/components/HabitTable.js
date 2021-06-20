@@ -1,9 +1,11 @@
 import {useEffect, useState} from "react";
-import {Button, Table, TableHead, Checkbox} from "@material-ui/core";
+import {Button, Table, TableHead, Checkbox, Fab,TextField} from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 import axios from "axios";
 import habitTableActions from "../actions/habitTableActions"
 import {useHistory} from "react-router-dom";
 import authHeader from "../actions/auth-header";
+import CreateHabitForm from "./CreateHabitForm";
 
 
 function HabitTable(props) {
@@ -37,7 +39,7 @@ function HabitTable(props) {
     const reloadHabits = () => {
         habitTableActions.getHabits(formatedDates[0],formatedDates[6]).then((data) => {
             setHabits(data.habit_data);
-            console.log(habits);
+            //console.log(habits);
         }).catch(function (error) {
             history.push('/auth/login')
         });
@@ -79,41 +81,43 @@ function HabitTable(props) {
         });
     }
 
+
+
     return (
         <div>
                <table>
                     <thead>
                         <tr rowSpan="2">
-                            <th rowSpan = "2">Habit ID</th>
-                            <th rowSpan="2">Habit Name</th>
-                            {dates.map((dt) => (
-                                <th>
-                                    <td>{dayRef[dt.getDay()]}</td>
-
+                            <th rowSpan = "2" key="HabitIDHeader">Habit ID</th>
+                            <th rowSpan="2" key="HabitNameHeader">Habit Name</th>
+                            {dates.map((dt, index) => (
+                                <th key = {`day${index}Header`}>
+                                    {dayRef[dt.getDay()]}
                                 </th>
                             ))}
                         </tr>
                         <tr>
-
-                            {dates.map((dt) => (
-                                <th date={formatDate(dt)}>{dt.getDate() }</th>
+                            {dates.map((dt, index) => (
+                                <th date={formatDate(dt)} key = {`date${index}Header`}>{dt.getDate() }</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
-                    {habits.map((h) => (
-                        <tr>
-                            <td>{h.habit_id}</td>
-                            <td>{h.habit_title}</td>
+                    {habits.map((h, index) => (
+                        <tr key={`HabitRow${index}`}>
+                            <td key={`HabitID${index}`}>{h.habit_id}</td>
+                            <td key={`HabitTitle${index}`}>{h.habit_title}</td>
                             {formatedDates.map((dt) => (
-                                <td date={dt}>
+                                <td date={dt} key={`HabitAction_${dt}_${index}`}>
                                     <Checkbox name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onClick={handleChange}/>
                                 </td>
                             ))}
                         </tr>
                     ))}
                     </tbody>
-                    <tfoot></tfoot>
+                    <tfoot>
+                        <CreateHabitForm habits = {habits} setHabits = {setHabits}/>
+                    </tfoot>
                 </table>
         </div>
     );

@@ -3,28 +3,34 @@ import {TextField, Button} from "@material-ui/core";
 import {useForm, Controller} from "react-hook-form";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
+import {useEffect} from "react";
 
 function LoginForm(props) {
-    const { register, handleSubmit,getValues, watch, control, formState: { errors, isValid }, setError} = useForm();
     let history = useHistory();
+    // useEffect(() =>{
+    if (props.loggedIn) {
+        history.push("/home");
+    };
+    // });
+    const { register, handleSubmit,getValues, watch, control, formState: { errors, isValid }, setError} = useForm();
+
     //console.log(props);
     const onSubmit= (data) => {
-        //console.log(data);
-        // console.log(errors);
-        //console.log("backend post");
-        axios.post(`http://localhost:5000/auth/login`, data).then(function (response){
-            //console.log();
-            //console.log(response.data.hasOwnProperty('access_token'));
-            //console.log(response.data);
+        axios.post(`http://localhost:5000/auth/login`, data).then((response) => {
             if (response.data.hasOwnProperty('error')){
                 setError("username",{type:"validate",message:response.data.error})
-                //console.log(errors.username);
             } else {
+                //console.log(response.data);
                 localStorage.setItem("user", JSON.stringify(response.data));
+                //console.log('in local storage:')
+               // console.log(localStorage.getItem('user'));
+                props.logInUser();
                 history.push("/home");
             }
-        }).catch(function (error){
+        }).catch((error) => {
             console.log(error);
+            //history.push('/');
+
         });
     }
     return (

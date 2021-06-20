@@ -39,23 +39,23 @@ class Login(Resource):
         db = database.get_db()
         username = request.json.get("username",None)
         password = request.json.get("password",None)
-        if request.method == 'POST':
-            db = database.get_db()
-            if db.execute("SELECT EXISTS(SELECT 1 from PASSWORD where username = (?))", (username,)).fetchone()[0] == 1:
-                saved_pass_hash = \
-                    db.execute("SELECT password_hash from PASSWORD where username = (?)", (username,)).fetchone()[0]
-                # Us = load_user(form.username.data)
-                if check_password_hash(saved_pass_hash, password):
-                    access_token = create_access_token(identity = username)
-                    #print(access_token)
-                    return {"access_token": access_token}, 200
-                else:
-                    error = "Wrong username/password combination"
+
+        db = database.get_db()
+        if db.execute("SELECT EXISTS(SELECT 1 from PASSWORD where username = (?))", (username,)).fetchone()[0] == 1:
+            saved_pass_hash = \
+                db.execute("SELECT password_hash from PASSWORD where username = (?)", (username,)).fetchone()[0]
+            # Us = load_user(form.username.data)
+            if check_password_hash(saved_pass_hash, password):
+                access_token = create_access_token(identity = username)
+                print(access_token)
+                return {"access_token": access_token}, 200
             else:
-                error = "Wrong username"
+                error = "Wrong username/password combination"
+        else:
+            error = "Wrong username"
 
         if error is not None:
-            #print(error)
+            print(error)
             return {"error": error}, 200
 
 
