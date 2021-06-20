@@ -19,27 +19,37 @@ def is_date_invalid(date_str):
 class UpdateHabitActions(Resource): #/update/<string:habit_id>&<string:habit_action>'
     @jwt_required()
     def post(self, habit_id, habit_action):
-        # TODO: Check if action already exists, if so, return 409
         # TODO: Check habit_id exists before insertion, if not found, return 404
         if is_date_invalid(habit_action):
             return {'msg': 'habit_action must have format YYYY-MM-DD and be a valid date'}, 400
         db = database.get_db()
         #check for existence
-        #update db
-        sql = "INSERT INTO HABIT_ACTION(username,habit_id, action_dt) values (?,?,?)"
+        sql = "SELECT * FROM HABIT WHERE username = (?) and habit_id = (?)"
+        if len(db.execute(sql, (get_jwt_identity(), habit_id)).fetchall()) == 0:
+            return {}, 404
 
-        db.execute(sql, (get_jwt_identity(), habit_id, habit_action))
-        db.commit()
+        sql = "SELECT * FROM HABIT_ACTION WHERE username = (?) and habit_id = (?) and action_dt = (?)"
+        if len(db.execute(sql, (get_jwt_identity(), habit_id, habit_action)).fetchall()) != 0:
+            return {}, 409
+        else:
+            #update db
+            sql = "INSERT INTO HABIT_ACTION(username,habit_id, action_dt) values (?,?,?)"
+            db.execute(sql, (get_jwt_identity(), habit_id, habit_action))
+            db.commit()
         return {}, 204
 
     @jwt_required()
     def delete(self, habit_id, habit_action):
         """to remove a habit action"""
         # TODO: Check if action exists, if not return 404
+
         if is_date_invalid(habit_action):
             return {'msg': 'habit_action must have format YYYY-MM-DD and be a valid date'}, 400
         db = database.get_db()
-
+        #check that habit_action exists
+        sql = "SELECT * FROM HABIT_ACTION WHERE username = (?) and habit_id = (?) and action_dt = (?)"
+        if len(db.execute(sql, (get_jwt_identity(), habit_id, habit_action)).fetchall()) == 0:
+            return {}, 404
         # update db
         sql = "DELETE FROM HABIT_ACTION WHERE username = (?) and habit_id = (?) and action_dt = (?)"
 

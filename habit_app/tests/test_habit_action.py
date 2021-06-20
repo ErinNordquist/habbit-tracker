@@ -30,9 +30,9 @@ def test_add_habit_action(client, auth, habit_id, habit_action, status):
             assert len(set(current_habit_actions)) == len(current_habit_actions)
 
 @pytest.mark.parametrize(
-    ('habit_id','habit_action','status'),
+    ('habit_id', 'habit_action', 'status'),
     (
-            (1, '2020-06-12', 204),
+            (1, '2021-06-12', 204),
             (1, '2020-06-11', 404), #doesn't exist
             (1, '2020-66-12', 400), #bad request
             (3, '2021-06-16', 404), #wrong user
