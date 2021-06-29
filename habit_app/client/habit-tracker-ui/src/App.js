@@ -3,10 +3,11 @@ import {useState} from "react";
 import HabitTable from "./components/HabitTable";
 import CreateUserForm from "./components/CreateUserForm";
 import LoginForm from "./components/LoginForm";
+import {AppBar,Drawer} from '@material-ui/core';
 
 import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
 import AuthActions from "./actions/AuthActions";
-import {StyledButton} from "./components/styles"
+import {StyledButton, StyledDrawer} from "./components/styles"
 
 function App(props) {
     //AuthActions.logout();
@@ -27,8 +28,8 @@ function App(props) {
     <div className="App">
         <BrowserRouter>
             <div className="App-header">
-                <nav>
-                    Habit Tracker
+                <StyledDrawer variant="permanent" anchor={"left"}>
+                    <div>Habit Tracker</div>
                     <Link to="/auth/create-account">
                         <StyledButton>Create Account</StyledButton>
                     </Link>
@@ -41,7 +42,7 @@ function App(props) {
                     <Link to="/auth/login">
                         <StyledButton onClick={logOutUser}>Log Out</StyledButton>
                     </Link>
-                </nav>
+                </StyledDrawer>
             </div>
             <div>
                 <Switch>
