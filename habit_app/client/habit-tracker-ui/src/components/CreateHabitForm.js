@@ -27,23 +27,30 @@ function CreateHabitForm(props) {
     const handleChange = (event) => {
         setValue(event.target.value);
     }
-    //
+
     return (
         <tr>
             <td>
                 <Button color="primary" size="small" aria-label="add" onClick=
                     {(event) => {
-                        setTextInput(
-                            <td className="HabitTitleCell">
-                                <form onSubmit={(event) => {event.preventDefault();}}>
-                                    <TextField id="new-habit"
-                                                label="New Habit" variant="filled"
-                                                onKeyUp={handleKeyUp}
-                                                onChange={handleChange}/>
-                                </form>
-                            </td>);
+                        if (textInput !== "") {
+                            setTextInput("");
+                        } else {
+                            setTextInput(
+                                <td className="HabitTitleCell">
+                                    <form onSubmit={(event) => {
+                                        event.preventDefault();
+                                    }}>
+                                        <TextField id="new-habit"
+                                                   label="New Habit" variant="filled"
+                                                   onKeyUp={handleKeyUp}
+                                                   onChange={handleChange}/>
+                                    </form>
+                                </td>);
+                        }
                     }}>
                     <AddIcon/>
+
                 </Button>
             </td>
             {textInput}
