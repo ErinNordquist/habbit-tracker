@@ -26,7 +26,7 @@ function HabitTableRows(props) {
         //send request to backend to make change in database
         const promise = habitTableActions.updateHabitAction(event.target.name,event.target.value, action);
         //once we get a successful response, modify the info on the front end to match what is now in the db
-        const dataPromise = promise.then((response) => {
+        promise.then((response) => {
             let newHabits = JSON.parse(JSON.stringify(props.habits));
             if (index > -1){
                 newHabits[habitIndex].habit_action.splice(index, 1);
