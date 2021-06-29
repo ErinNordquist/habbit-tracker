@@ -8,12 +8,12 @@ function getHabits(start_date, end_date) {
     //console.log('called getHabits function');
     //console.log(authHeader());
 
-    const promise = axios.get(API_URL+"home"+"/"+start_date+"&"+end_date, {headers: authHeader()});
+    const promise = axios.get(API_URL+"home/"+start_date+"&"+end_date, {headers: authHeader()});
     return promise;
 };
 
 function updateHabitAction(habit_id, habit_action, action) {
-    const requestURL = API_URL + "update"+"/"+habit_id+"&"+habit_action;
+    const requestURL = API_URL + "update/"+habit_id+"&"+habit_action;
     if (action === 'add') {
         const promise = axios.post(requestURL, {}, {headers: authHeader()});
         return promise;
