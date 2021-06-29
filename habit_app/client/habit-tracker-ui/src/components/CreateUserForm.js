@@ -6,7 +6,7 @@ import {useHistory} from "react-router-dom";
 
 
 function CreateUserForm(props) {
-    const { register, handleSubmit,getValues, watch, control, formState: { errors, isValid },setError } = useForm();
+    const { handleSubmit,getValues, watch, control, formState: { errors },setError } = useForm();
     const password = useRef({});
     password.current = watch("password");
     const username = useRef({});

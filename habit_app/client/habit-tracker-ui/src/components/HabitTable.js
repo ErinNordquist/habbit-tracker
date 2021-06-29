@@ -5,7 +5,6 @@ import CreateHabitForm from "./CreateHabitForm";
 import HabitTableRows from "./HabitTableRows";
 
 
-
 function HabitTable(props) {
     const [habits,setHabits] = useState([]);
     const minusDays = (date, days) => {
