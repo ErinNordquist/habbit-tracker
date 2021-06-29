@@ -1,4 +1,4 @@
-import {Fab, TextField} from "@material-ui/core";
+import {Fab, TextField, Button} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import {useState} from "react";
 import habitTableActions from "../actions/habitTableActions"
@@ -14,7 +14,6 @@ function CreateHabitForm(props) {
                     console.log(response.data);
                     setTextInput(null);
                     props.setHabits(props.habits.concat(response.data));
-
                 }
 
             ).catch()
@@ -31,7 +30,7 @@ function CreateHabitForm(props) {
     return (
         <tr>
             <td>
-                <Fab color="primary" size="small" aria-label="add" onClick=
+                <Button color="primary" size="small" aria-label="add" onClick=
                     {(event) => {
                         setTextInput(
                             <td>
@@ -44,7 +43,7 @@ function CreateHabitForm(props) {
                             </td>);
                     }}>
                     <AddIcon/>
-                </Fab>
+                </Button>
             </td>
             {textInput}
         </tr>
