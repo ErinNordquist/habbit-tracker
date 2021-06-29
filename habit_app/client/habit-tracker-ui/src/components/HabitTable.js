@@ -52,7 +52,7 @@ function HabitTable(props) {
     }, []);
 
     return (
-        <div>
+        <div id = "HabitTableDiv">
                <table id='HabitTable'>
                     <thead>
                         <tr rowSpan="2" id="HeaderRow1">

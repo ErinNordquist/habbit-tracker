@@ -1,7 +1,11 @@
-#HabitTable {
+#HabitTableDiv {
     table-layout: auto;
-    width: 900px;
+    width: 800px;
+    padding: 50px;
 }
+
 .HabitTitleCell {
-    column-width: 200px;
+    column-width: 250px;
+    line-height: 60px;
+    border: inherit;
 }
