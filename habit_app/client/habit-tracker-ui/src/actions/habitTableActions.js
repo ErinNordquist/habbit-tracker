@@ -29,5 +29,6 @@ function addHabit(habit_title){
     return promise;
 }
 
+const habitTableActions = {getHabits,updateHabitAction, addHabit};
 
-export default {getHabits,updateHabitAction, addHabit};
+export default habitTableActions;
