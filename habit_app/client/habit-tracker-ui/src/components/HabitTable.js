@@ -1,14 +1,9 @@
 import {useEffect, useState} from "react";
-import {Button, Table, TableHead, Checkbox, Fab,TextField} from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
-import AddIcon from '@material-ui/icons/Add';
-import axios from "axios";
 import habitTableActions from "../actions/habitTableActions"
 import {useHistory} from "react-router-dom";
-import authHeader from "../actions/auth-header";
 import CreateHabitForm from "./CreateHabitForm";
 import HabitTableRows from "./HabitTableRows";
-import {set} from "react-hook-form";
+
 
 
 function HabitTable(props) {

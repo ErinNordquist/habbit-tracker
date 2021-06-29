@@ -1,9 +1,8 @@
-//import {useState, useRef} from "react";
 import {TextField, Button} from "@material-ui/core";
 import {useForm, Controller} from "react-hook-form";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
-import {useEffect} from "react";
+
 
 function LoginForm(props) {
     let history = useHistory();
@@ -12,7 +11,7 @@ function LoginForm(props) {
         history.push("/home");
     };
     // });
-    const { register, handleSubmit,getValues, watch, control, formState: { errors, isValid }, setError} = useForm();
+    const { handleSubmit, control, formState: { errors}, setError} = useForm();
 
     //console.log(props);
     const onSubmit= (data) => {
