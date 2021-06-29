@@ -24,8 +24,11 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.Nav-button {
+  color: white;
+  secondary-color:white;
+  background-color: inherit;
+
 }
 
 @keyframes App-logo-spin {
