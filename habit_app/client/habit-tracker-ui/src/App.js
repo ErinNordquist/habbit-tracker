@@ -4,7 +4,6 @@ import HabitTable from "./components/HabitTable";
 import CreateUserForm from "./components/CreateUserForm";
 import LoginForm from "./components/LoginForm";
 
-//import NavBar from "./components/NavBar";
 import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
 import AuthActions from "./actions/AuthActions";
 import {StyledButton} from "./components/styles"
