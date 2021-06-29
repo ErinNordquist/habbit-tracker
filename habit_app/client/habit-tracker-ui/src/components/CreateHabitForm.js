@@ -50,7 +50,6 @@ function CreateHabitForm(props) {
                         }
                     }}>
                     <AddIcon/>
-
                 </Button>
             </td>
             {textInput}
