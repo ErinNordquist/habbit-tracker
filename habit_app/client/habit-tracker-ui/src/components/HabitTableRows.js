@@ -45,7 +45,7 @@ function HabitTableRows(props) {
                             <EditIcon/>
                         </Button>
                     </td>
-                    <td key={`HabitTitle${index}`}>{h.habit_title}</td>
+                    <td key={`HabitTitle${index}`} className="HabitTitleCell">{h.habit_title}</td>
                     {props.formattedDates.map((dt) => (
                         <td date={dt} key={`HabitAction_${dt}_${index}`}>
                             <Checkbox name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onClick={handleChange}/>

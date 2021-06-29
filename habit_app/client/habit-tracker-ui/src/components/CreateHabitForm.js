@@ -34,7 +34,7 @@ function CreateHabitForm(props) {
                 <Button color="primary" size="small" aria-label="add" onClick=
                     {(event) => {
                         setTextInput(
-                            <td>
+                            <td className="HabitTitleCell">
                                 <form onSubmit={(event) => {event.preventDefault();}}>
                                     <TextField id="new-habit"
                                                 label="New Habit" variant="filled"

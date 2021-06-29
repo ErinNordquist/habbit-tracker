@@ -1,4 +1,7 @@
-#HabitTableRows {
+#HabitTable {
     table-layout: auto;
-    width: 280px;
+    width: 900px;
+}
+.HabitTitleCell {
+    column-width: 200px;
 }

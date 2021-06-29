@@ -53,18 +53,18 @@ function HabitTable(props) {
 
     return (
         <div>
-               <table>
+               <table id='HabitTable'>
                     <thead>
-                        <tr rowSpan="2">
-                            <th rowSpan = "2" key="HabitIDHeader"></th>
-                            <th rowSpan="2" key="HabitNameHeader">Habit Name</th>
+                        <tr rowSpan="2" id="HeaderRow1">
+                            <th rowSpan = "2" id="HabitIDHeader"></th>
+                            <th rowSpan="2" id="HabitNameHeader">Habit Name</th>
                             {dates.map((dt, index) => (
                                 <th key = {`day${index}Header`}>
                                     {dayRef[dt.getDay()]}
                                 </th>
                             ))}
                         </tr>
-                        <tr>
+                        <tr id="HeaderRow2">
                             {dates.map((dt, index) => (
                                 <th date={formatDate(dt)} key = {`date${index}Header`}>{dt.getDate() }</th>
                             ))}
