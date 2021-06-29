@@ -1,7 +1,8 @@
-import {Fab, TextField, Button} from "@material-ui/core";
+import {TextField, Button} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import {useState} from "react";
 import habitTableActions from "../actions/habitTableActions"
+import '../css/HabitTable.css';
 
 function CreateHabitForm(props) {
     const [textInput, setTextInput] = useState()

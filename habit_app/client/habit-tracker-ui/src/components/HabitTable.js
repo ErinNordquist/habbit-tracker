@@ -3,7 +3,7 @@ import habitTableActions from "../actions/habitTableActions"
 import {useHistory} from "react-router-dom";
 import CreateHabitForm from "./CreateHabitForm";
 import HabitTableRows from "./HabitTableRows";
-
+import '../css/HabitTable.css';
 
 function HabitTable(props) {
     const [habits,setHabits] = useState([]);
@@ -38,7 +38,7 @@ function HabitTable(props) {
             setHabits(data.habit_data);
             //console.log(habits);
         }).catch(function (error) {
-            console.log(JSON.stringify(error))
+            //console.log(JSON.stringify(error))
             //log out if unauthorized (expired token)
             if (error.response.status === 401) {
                 props.logOutUser()

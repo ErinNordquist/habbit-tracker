@@ -1,6 +1,7 @@
 import {Button, Checkbox} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import habitTableActions from "../actions/habitTableActions";
+import '../css/HabitTable.css';
 
 
 function HabitTableRows(props) {
@@ -18,13 +19,12 @@ function HabitTableRows(props) {
         //locate habit that event refers to
         const habitIndex = findHabit("habit_id", event.target.name);
         let index = -1;
-        let action = 'add';
         if (props.habits[habitIndex].habit_action.includes(event.target.value)) {
             index = props.habits[habitIndex].habit_action.indexOf(event.target.value);
-            action = 'delete';
         }
         //send request to backend to make change in database
-        const promise = habitTableActions.updateHabitAction(event.target.name,event.target.value, action);
+        const promise =
+            habitTableActions.updateHabitAction(event.target.name,event.target.value, (index>-1 ? 'delete' : 'add'));
         //once we get a successful response, modify the info on the front end to match what is now in the db
         promise.then((response) => {
             let newHabits = JSON.parse(JSON.stringify(props.habits));
@@ -37,7 +37,7 @@ function HabitTableRows(props) {
         });
     }
     return (
-        <tbody>
+        <tbody id='HabitTableRows'>
             {props.habits.map((h, index) => (
                 <tr key={`HabitRow${index}`}>
                     <td key={`HabitID${index}`}>
