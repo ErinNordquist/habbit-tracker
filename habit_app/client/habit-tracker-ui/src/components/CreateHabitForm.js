@@ -5,7 +5,7 @@ import habitTableActions from "../actions/habitTableActions"
 import '../css/HabitTable.css';
 
 function CreateHabitForm(props) {
-    const [textInput, setTextInput] = useState()
+    const [textInput, setTextInput] = useState("")
     const [value, setValue] = useState("")
     const handleKeyUp = (event) => {
         if (event.keyCode === 13) {
@@ -33,7 +33,7 @@ function CreateHabitForm(props) {
             <td>
                 <Button color="primary" size="small" aria-label="add" onClick=
                     {(event) => {
-                        if (textInput !== "") {
+                        if (textInput !== ""){
                             setTextInput("");
                         } else {
                             setTextInput(
