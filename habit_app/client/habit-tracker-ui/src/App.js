@@ -1,0 +1,56 @@
+import './css/App.css';
+import {useState} from "react";
+import HabitTable from "./components/HabitTable";
+import CreateUserForm from "./components/CreateUserForm";
+import LoginForm from "./components/LoginForm";
+//import NavBar from "./components/NavBar";
+import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
+import AuthActions from "./actions/AuthActions";
+import {StyledButton} from "./components/styles"
+
+function App() {
+    AuthActions.logout();
+    console.log(localStorage);
+    const [user, setUser] = useState(AuthActions.getCurrentUser());
+    const [loggedIn, setLoggedIn] = useState(user !== null);
+    console.log(user);
+    console.log(loggedIn);
+
+  return (
+    <div className="App">
+        <BrowserRouter>
+            <div className="App-header">
+                <nav>
+                    Habit Tracker
+                    <Link to="/auth/create-account">
+                        <StyledButton>Create Account</StyledButton>
+                    </Link>
+                    <Link to="/auth/login">
+                        <StyledButton>Login</StyledButton>
+                    </Link>
+                    <Link to="/home">
+                        <StyledButton>Home</StyledButton>
+                    </Link>
+
+                </nav>
+            </div>
+            <div>
+                <Switch>
+                    <Route path="/auth/create-account">
+                        <CreateUserForm/>
+                    </Route>
+                    <Route props = {setUser} path="/auth/login" exact>
+                        <LoginForm/>
+                    </Route>
+                    <Route path="/home">
+                        <HabitTable/>
+                    </Route>
+                </Switch>
+            </div>
+        </BrowserRouter>
+    </div>
+
+  );
+}
+
+export default App;

@@ -1,11 +1,11 @@
 import os
-import tempfile
 import pytest
 import sys
-from flask import session, g
+from flask import session
+
 sys.path.append(os.getcwd())
 
-from habit_app import database, create_app
+from archive import database
 
 
 def test_root(client):
@@ -19,11 +19,11 @@ def test_root(client):
         ('saved_test_user','test_password', 'http://localhost/auth/create-account', 'fail'),
     ),
 )
-def test_create_user_successful(client, app, username, password, destination, outcome):
+def test_create_user(client, app, username, password, destination, outcome):
     assert client.get("/auth/create-account").status_code == 200
     response = client.post("/auth/create-account", data={"username":username, "password":password})
     #(response.status_code)
-    print(response.headers['Location'])
+    #print(response.headers['Location'])
     assert destination == response.headers['Location']
 
     with app.app_context():
@@ -45,7 +45,7 @@ def test_create_user_successful(client, app, username, password, destination, ou
 @pytest.mark.parametrize(
     ('username','password','destination'),
     (
-        ('saved_test_user','saved_test_password', 'http://localhost/index'),
+        ('saved_test_user','saved_test_password', 'http://localhost/home'),
         ('saved_test_user','saved_test_passw654ord', 'http://localhost/auth/login'),
         ('saved_tser','saved_test_password', 'http://localhost/auth/login'),
     ),
@@ -59,19 +59,19 @@ def test_login(client, auth, username, password, destination):
 @pytest.mark.parametrize(
     ('username','password','destination'),
     (
-        ('saved_test_user','saved_test_password', 'http://localhost/index'),
+        ('saved_test_user','saved_test_password', 'http://localhost/auth/login'),
     ),
 )
 def test_logout(client, auth, username, password, destination):
     with client:
         auth.login(username=username, password=password)
         #print(session)
-        assert "username" in session
+        assert "_user_id" in session
         response = auth.logout()
         assert response.status_code == 302
         assert destination == response.headers['Location']
         #print(session)
-        assert "username" not in session
+        assert "_user_id" not in session
 
 
 
