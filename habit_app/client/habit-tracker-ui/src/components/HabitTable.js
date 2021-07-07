@@ -49,7 +49,7 @@ function HabitTable(props) {
 
     useEffect(() =>{
         reloadHabits()
-    });
+    },[]);
 
     return (
         <div id = "HabitTableDiv">
