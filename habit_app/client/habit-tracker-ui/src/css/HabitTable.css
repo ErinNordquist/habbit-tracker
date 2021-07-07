@@ -11,6 +11,6 @@
     border: inherit;
 }
 
-.MuiButtonBase-root > * {
+.MuiIconButton-root > * {
     pointer-events: none;
 }
