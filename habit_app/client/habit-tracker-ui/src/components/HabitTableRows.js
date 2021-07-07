@@ -1,5 +1,5 @@
-import {IconButton, Checkbox, TableBody, withStyles, makeStyles, Input, TextField, InputBase} from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+import {Checkbox} from "@material-ui/core";
+//import EditIcon from "@material-ui/icons/Edit";
 import habitTableActions from "../actions/habitTableActions";
 import '../css/HabitTable.css';
 import HabitTitleCell from "./HabitTitleCell";
