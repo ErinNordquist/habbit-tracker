@@ -1,11 +1,10 @@
-import {Button, Checkbox, TableBody} from "@material-ui/core";
+import {IconButton, Checkbox, TableBody, withStyles, makeStyles, Input, TextField, InputBase} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import habitTableActions from "../actions/habitTableActions";
 import '../css/HabitTable.css';
-
+import HabitTitleCell from "./HabitTitleCell";
 
 function HabitTableRows(props) {
-
     const findHabit = (attribute, value) => {
         for (let [index, habit] of props.habits.entries()) {
             if (habit[attribute] == value) {
@@ -36,16 +35,16 @@ function HabitTableRows(props) {
             props.setHabits(newHabits);
         });
     }
+
     return (
-        <tbody id='HabitTableRows'>
+        <tbody id='HabitTableRows' >
             {props.habits.map((h, index) => (
                 <tr key={`HabitRow${index}`}>
-                    <td key={`HabitID${index}`}>
-                        <Button>
-                            <EditIcon/>
-                        </Button>
-                    </td>
-                    <td key={`HabitTitle${index}`} className="HabitTitleCell">{h.habit_title}</td>
+                    <HabitTitleCell key={`HabitTitle${index}`}
+                                    value={h.habit_title}
+                                    habits = {props.habits}
+                                    setHabits={props.setHabits}
+                                    habitIndex = {index}/>
                     {props.formattedDates.map((dt) => (
                         <td date={dt} key={`HabitAction_${dt}_${index}`}>
                             <Checkbox name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onClick={handleChange}/>

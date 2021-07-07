@@ -42,6 +42,15 @@ function addHabit(habit_title){
     return promise;
 }
 
-const habitTableActions = {getHabits,updateHabitAction, addHabit};
+function updateHabitTitle(habit_id, new_habit_title) {
+    const requestURL = API_URL+`habit/${habit_id}`;
+    console.log(new_habit_title);
+    const requestBody = {habit_title: `${new_habit_title}`};
+    const promise = axios.put(requestURL, requestBody,{headers:authHeader()})
+    checkForExpiredToken(promise);
+    return promise;
+}
+
+const habitTableActions = {getHabits,updateHabitAction, addHabit, updateHabitTitle};
 
 export default habitTableActions;
