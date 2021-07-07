@@ -41,7 +41,7 @@ function HabitTableRows(props) {
             {props.habits.map((h, index) => (
                 <tr key={`HabitRow${index}`}>
                     <HabitTitleCell key={`HabitTitle${index}`}
-                                    value={h.habit_title}
+                                    //value={h.habit_title}
                                     habits = {props.habits}
                                     setHabits={props.setHabits}
                                     habitIndex = {index}/>
