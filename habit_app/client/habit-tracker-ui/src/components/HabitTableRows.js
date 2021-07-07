@@ -3,6 +3,7 @@ import {Checkbox} from "@material-ui/core";
 import habitTableActions from "../actions/habitTableActions";
 import '../css/HabitTable.css';
 import HabitTitleCell from "./HabitTitleCell";
+import CheckboxWithProps from "./CheckboxWithProps";
 
 function HabitTableRows(props) {
     const findHabit = (attribute, value) => {
@@ -18,6 +19,9 @@ function HabitTableRows(props) {
         //locate habit that event refers to
         const habitIndex = findHabit("habit_id", event.target.name);
         let index = -1;
+        console.log(event);
+        console.log(habitIndex);
+        console.log(props.habits);
         if (props.habits[habitIndex].habit_action.includes(event.target.value)) {
             index = props.habits[habitIndex].habit_action.indexOf(event.target.value);
         }
@@ -49,7 +53,7 @@ function HabitTableRows(props) {
                                     history={props.history}/>
                     {props.formattedDates.map((dt) => (
                         <td date={dt} key={`HabitAction_${dt}_${index}`}>
-                            <Checkbox name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onClick={handleChange}/>
+                            <input type="checkbox" name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onClick={handleChange}/>
                         </td>
                     ))}
                 </tr>

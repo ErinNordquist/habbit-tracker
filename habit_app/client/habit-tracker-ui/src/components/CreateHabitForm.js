@@ -9,7 +9,7 @@ function CreateHabitForm(props) {
     const [value, setValue] = useState("")
     const handleKeyUp = (event) => {
         if (event.keyCode === 13) {
-            console.log(event.target.value);
+            //console.log(props.habits);
             habitTableActions.addHabit(event.target.value, props.history).then((response) => {
                     response.data['habit_action'] = []
                     console.log(response.data);

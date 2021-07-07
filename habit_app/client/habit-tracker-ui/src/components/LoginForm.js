@@ -2,12 +2,13 @@ import {TextField, Button} from "@material-ui/core";
 import {useForm, Controller} from "react-hook-form";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
+import AuthActions from "../actions/AuthActions";
 
 
 function LoginForm(props) {
     let history = useHistory();
     // useEffect(() =>{
-    if (props.loggedIn) {
+    if (AuthActions.getCurrentUser() !== null) {
         history.push("/home");
     };
     // });

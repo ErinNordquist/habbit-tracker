@@ -14,3 +14,7 @@
 .MuiIconButton-root > * {
     pointer-events: none;
 }
+
+table {
+    border: 1px black;
+}
