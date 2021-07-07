@@ -6,6 +6,7 @@ import HabitTitleCell from "./HabitTitleCell";
 import CheckboxWithProps from "./CheckboxWithProps";
 
 function HabitTableRows(props) {
+    console.log(props.history);
     const findHabit = (attribute, value) => {
         for (let [index, habit] of props.habits.entries()) {
             if (habit[attribute] == value) {
@@ -19,9 +20,6 @@ function HabitTableRows(props) {
         //locate habit that event refers to
         const habitIndex = findHabit("habit_id", event.target.name);
         let index = -1;
-        console.log(event);
-        console.log(habitIndex);
-        console.log(props.habits);
         if (props.habits[habitIndex].habit_action.includes(event.target.value)) {
             index = props.habits[habitIndex].habit_action.indexOf(event.target.value);
         }

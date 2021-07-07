@@ -24,29 +24,13 @@ function HabitTitleCell(props) {
     }
 
     const handleChange = (event) => {
-        //event.preventDefault();
-        //console.log(event.target);
-        //console.log(event.target.value);
         const newTitle = event.target.value;
-        console.log(newTitle);
         inputValue = newTitle;
-        //while(inputValue != newTitle){}
-        console.log(inputValue);
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        // //send request to api
-        // event.preventDefault();
-        // //console.log(inputValue);
-        // habitTableActions.updateHabitTitle(habits[habitIndex].habit_id, inputValue).then((response) => {
-        //     habits[habitIndex].habit_title = inputValue;
-        //     setTextArea(habits[habitIndex].habit_title);
-        //     props.setHabits(habits);
-        // })
-
     }
     const handleEditPush = (event) => {
-        //console.log(event.target);
         if (!textCell.type) {
             setTextCell(
                 <form onSubmit={handleSubmit}>
