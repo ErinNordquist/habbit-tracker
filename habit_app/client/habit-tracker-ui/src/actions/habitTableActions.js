@@ -9,7 +9,7 @@ function checkForExpiredToken(promise, history) {
         if (error.response.status === 401) {
             console.log('Token is Expired');
             AuthActions.logout();
-            history.push("/login");
+            history.push("/auth/login");
         }
     })
 }
