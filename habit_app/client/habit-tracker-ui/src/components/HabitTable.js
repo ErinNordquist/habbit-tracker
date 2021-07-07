@@ -34,7 +34,7 @@ function HabitTable(props) {
     let history = useHistory();
 
     const reloadHabits = () => {
-        habitTableActions.getHabits(formattedDates[0],formattedDates[6]).then((response) => {
+        habitTableActions.getHabits(formattedDates[0],formattedDates[6], history).then((response) => {
             let data = response.data
             setHabits(data.habit_data);
             //console.log(habits);
@@ -69,9 +69,10 @@ function HabitTable(props) {
                             ))}
                         </tr>
                     </thead>
-                    <HabitTableRows habits={habits} setHabits={setHabits} formattedDates={formattedDates}/>
+                    <HabitTableRows habits={habits} setHabits={setHabits}
+                                    formattedDates={formattedDates} history={history}/>
                     <tfoot>
-                        <CreateHabitForm habits = {habits} setHabits = {setHabits}/>
+                        <CreateHabitForm habits = {habits} setHabits = {setHabits} history={history}/>
                     </tfoot>
                 </table>
         </div>

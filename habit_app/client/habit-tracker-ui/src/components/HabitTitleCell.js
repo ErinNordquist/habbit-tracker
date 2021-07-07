@@ -13,7 +13,7 @@ function HabitTitleCell(props) {
     const handleKeyUp = (event) => {
         if (event.keyCode === 13) {
             //console.log(inputValue);
-            habitTableActions.updateHabitTitle(habits[habitIndex].habit_id, inputValue)
+            habitTableActions.updateHabitTitle(habits[habitIndex].habit_id, inputValue, props.history)
                 .then((response) => {
                 habits[habitIndex].habit_title = inputValue;
                 setTextCell(habits[habitIndex].habit_title);

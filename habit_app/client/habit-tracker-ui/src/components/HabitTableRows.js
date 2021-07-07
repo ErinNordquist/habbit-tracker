@@ -23,7 +23,8 @@ function HabitTableRows(props) {
         }
         //send request to backend to make change in database
         const promise =
-            habitTableActions.updateHabitAction(event.target.name,event.target.value, (index>-1 ? 'delete' : 'add'));
+            habitTableActions.updateHabitAction(event.target.name,event.target.value,
+                (index>-1 ? 'delete' : 'add'), props.history);
         //once we get a successful response, modify the info on the front end to match what is now in the db
         promise.then((response) => {
             let newHabits = JSON.parse(JSON.stringify(props.habits));
@@ -33,7 +34,7 @@ function HabitTableRows(props) {
                 newHabits[habitIndex].habit_action.push(event.target.value);
             }
             props.setHabits(newHabits);
-        });
+        }).catch();
     }
 
     return (
@@ -44,7 +45,8 @@ function HabitTableRows(props) {
                                     //value={h.habit_title}
                                     habits = {props.habits}
                                     setHabits={props.setHabits}
-                                    habitIndex = {index}/>
+                                    habitIndex = {index}
+                                    history={props.history}/>
                     {props.formattedDates.map((dt) => (
                         <td date={dt} key={`HabitAction_${dt}_${index}`}>
                             <Checkbox name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onClick={handleChange}/>
