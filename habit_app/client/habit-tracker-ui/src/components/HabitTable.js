@@ -3,6 +3,7 @@ import habitTableActions from "../actions/habitTableActions"
 import {useHistory} from "react-router-dom";
 import CreateHabitForm from "./CreateHabitForm";
 import HabitTableRows from "./HabitTableRows";
+import {Slide, Card, CardContent, Typography, Box} from '@material-ui/core';
 import '../css/HabitTable.css';
 
 function HabitTable(props) {
@@ -55,18 +56,16 @@ function HabitTable(props) {
         <div id = "HabitTableDiv">
                <table id='HabitTable'>
                     <thead>
-                        <tr rowSpan="2" id="HeaderRow1">
-                            <th rowSpan = "2" id="HabitIDHeader"></th>
-                            <th rowSpan="2" id="HabitNameHeader">Habit Name</th>
+                        <tr rowSpan="1" id="HeaderRow1">
+                            <th rowSpan = "1" id="HabitIDHeader"></th>
+                            <th rowSpan="1" id="HabitNameHeader">Habit Name</th>
                             {dates.map((dt, index) => (
                                 <th key = {`day${index}Header`}>
-                                    {dayRef[dt.getDay()]}
+                                    <Box>
+                                        <Typography variant="body2">{dayRef[dt.getDay()]}</Typography>
+                                        <Typography variant="body1">{dt.getDate()}</Typography>
+                                    </Box>
                                 </th>
-                            ))}
-                        </tr>
-                        <tr id="HeaderRow2">
-                            {dates.map((dt, index) => (
-                                <th date={formatDate(dt)} key = {`date${index}Header`}>{dt.getDate() }</th>
                             ))}
                         </tr>
                     </thead>
