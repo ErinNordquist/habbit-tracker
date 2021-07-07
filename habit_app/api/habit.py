@@ -81,8 +81,6 @@ class ModHabit(Resource):  # /habit/<int:habit_id>
         """Used for updating title of a habit"""
         db = database.get_db()
         #check that we have a new title
-        print(request.headers)
-        print(request.json)
         new_title = request.json.get('habit_title')
         if new_title is None:
             return {'msg': 'request must have a body with the argument "habit_title"'}, 400
