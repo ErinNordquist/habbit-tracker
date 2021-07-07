@@ -10,3 +10,7 @@
     line-height: 60px;
     border: inherit;
 }
+
+.MuiButtonBase-root > * {
+    pointer-events: none;
+}
