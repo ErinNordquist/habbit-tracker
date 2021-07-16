@@ -29,10 +29,10 @@ function CreateUserForm(props) {
         });
     }
     return (
-        <div>
+        <div class="User-form-div" id="Create-User-Form-div">
             <h1>Create New User</h1>
-            <form  onSubmit={e => e.preventDefault()}>
-               <ul><Controller
+            <form  onSubmit={e => e.preventDefault()} class="User-form">
+               <ul class="Form-element"><Controller
                     name="username"
                     control={control}
                     defaultValue=""
@@ -46,14 +46,14 @@ function CreateUserForm(props) {
                                                      />}
                /></ul>
                 {errors.username && <p>{errors.username.message}</p>}
-                <ul><Controller
+                <ul class="Form-element"><Controller
                     name="password"
                     control={control}
                     defaultValue=""
                     rules={{required: true}}
                     render={({ field }) => <TextField label="Password" type="password"value={field.value} inputRef={field.ref} onChange={field.onChange} />}
                     /></ul>
-                <ul><Controller
+                <ul class="Form-element"><Controller
                     name="confirm_password"
                     control={control}
                     defaultValue=""
@@ -65,7 +65,9 @@ function CreateUserForm(props) {
                 </ul>
                 <p>{errors.confirm_password && errors.confirm_password.message}</p>
 
-                <ul><Button type="submit" value="submit" onClick={handleSubmit(onSubmit)}>Submit</Button></ul>
+                <ul class="Form-element">
+                    <Button type="submit" value="submit" onClick={handleSubmit(onSubmit)}>Submit</Button>
+                </ul>
             </form>
         </div>
     );

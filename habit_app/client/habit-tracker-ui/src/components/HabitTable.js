@@ -58,7 +58,7 @@ function HabitTable(props) {
                     <thead>
                         <tr rowSpan="1" id="HeaderRow1">
                             <th rowSpan = "1" id="HabitIDHeader"></th>
-                            <th rowSpan="1" id="HabitNameHeader">Habit Name</th>
+                            <th rowSpan="1" id="HabitNameHeader">Habit</th>
                             {dates.map((dt, index) => (
                                 <th key = {`day${index}Header`}>
                                     <Box>

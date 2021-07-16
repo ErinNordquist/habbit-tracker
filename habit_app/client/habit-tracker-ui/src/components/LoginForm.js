@@ -3,7 +3,7 @@ import {useForm, Controller} from "react-hook-form";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
 import AuthActions from "../actions/AuthActions";
-
+import '../css/App.css';
 
 function LoginForm(props) {
     let history = useHistory();
@@ -34,17 +34,17 @@ function LoginForm(props) {
         });
     }
     return (
-        <div>
+        <div class="User-form-div">
             <h1>Login</h1>
             <form  onSubmit={e => e.preventDefault()}>
-                <ul><Controller
+                <ul class="Form-element"><Controller
                     name="username"
                     control={control}
                     defaultValue=""
                     rules={{required: true}}
                     render={({ field }) => <TextField label="Username" value={field.value} inputRef={field.ref} onChange={field.onChange} />}
                 /></ul>
-                <ul><Controller
+                <ul class="Form-element"><Controller
                     name="password"
                     control={control}
                     defaultValue=""
@@ -52,7 +52,7 @@ function LoginForm(props) {
                     render={({ field }) => <TextField label="Password" type="password" value={field.value} inputRef={field.ref} onChange={field.onChange} />}
                 /></ul>
                 {errors.username && <div>{errors.username.message}</div>}
-                <ul><Button type="submit" value="submit" onClick={handleSubmit(onSubmit)}>Submit</Button></ul>
+                <ul class="Form-element"><Button type="submit" value="submit" onClick={handleSubmit(onSubmit)}>Submit</Button></ul>
             </form>
         </div>
     );
