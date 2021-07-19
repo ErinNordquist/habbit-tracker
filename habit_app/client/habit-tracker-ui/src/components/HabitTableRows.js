@@ -3,7 +3,6 @@ import {Checkbox} from "@material-ui/core";
 import habitTableActions from "../actions/habitTableActions";
 import '../css/HabitTable.css';
 import HabitTitleCell from "./HabitTitleCell";
-import CheckboxWithProps from "./CheckboxWithProps";
 
 function HabitTableRows(props) {
     console.log(props.history);

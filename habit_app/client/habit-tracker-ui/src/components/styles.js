@@ -18,7 +18,7 @@ export const StyledButton = withStyles({
 
 export const StyledDrawer = withStyles({
     root:{
-        //background:"black",
+        background:"black",
         //color: "black",
     },
 })(Drawer);
