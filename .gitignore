@@ -128,5 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# sqlite3 files
-**/*.db
+**/node_modules/*
+habit_app/api/database.db
+*.db
+.idea/misc.xml
+.idea/workspace.xml
+habit_app/client/habit-tracker-ui/.idea/workspace.xml
