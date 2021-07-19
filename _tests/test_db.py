@@ -1,6 +1,6 @@
 import sqlite3
 import pytest
-from habit_app import database
+from archive import database
 
 def test_get_close_db(app):
     with app.app_context():

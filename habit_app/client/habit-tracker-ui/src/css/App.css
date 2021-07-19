@@ -1,0 +1,55 @@
+.App {
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 5vh;
+  display: block;
+  flex-direction: column;
+  font-size: 4vh;
+  color: white;
+  width:100%;
+  z-index: 1400;
+
+}
+
+.Nav-button {
+  color: white;
+  secondary-color:white;
+  background-color: #282c34;
+
+}
+
+nav {
+  background-color: black;
+  width: 25%;
+  max-width: 90px;
+  display: inline;
+  text-align: left;
+
+
+}
+
+.Nav-container {
+  background-color: black !important;
+  width: 10%;
+  top:5vh !important;
+}
+
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

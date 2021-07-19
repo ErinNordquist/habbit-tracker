@@ -1,0 +1,18 @@
+#HabitTableDiv {
+    table-layout: auto;
+
+}
+
+.HabitTitleCell {
+    column-width: 250px;
+    line-height: 60px;
+    border: inherit;
+}
+
+.MuiIconButton-root > * {
+    pointer-events: none;
+}
+
+table {
+    border: 1px black;
+}
