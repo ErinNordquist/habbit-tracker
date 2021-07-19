@@ -1,12 +1,10 @@
 import {useEffect, useState} from "react";
-import {Button, Table, TableHead, Checkbox, Fab,TextField} from "@material-ui/core";
-import AddIcon from '@material-ui/icons/Add';
-import axios from "axios";
 import habitTableActions from "../actions/habitTableActions"
 import {useHistory} from "react-router-dom";
-import authHeader from "../actions/auth-header";
 import CreateHabitForm from "./CreateHabitForm";
-
+import HabitTableRows from "./HabitTableRows";
+import {Slide, Card, CardContent, Typography, Box} from '@material-ui/core';
+import '../css/HabitTable.css';
 
 function HabitTable(props) {
     const [habits,setHabits] = useState([]);
@@ -31,17 +29,17 @@ function HabitTable(props) {
             String(dt.getDate()).padStart(2, 0);
     }
 
-    const [formatedDates, setFormatedDates] = useState(dates.map(formatDate));
+    const [formattedDates, setFormattedDates] = useState(dates.map(formatDate));
 
     let history = useHistory();
 
     const reloadHabits = () => {
-        habitTableActions.getHabits(formatedDates[0],formatedDates[6]).then((response) => {
+        habitTableActions.getHabits(formattedDates[0],formattedDates[6], history).then((response) => {
             let data = response.data
             setHabits(data.habit_data);
             //console.log(habits);
         }).catch(function (error) {
-            console.log(JSON.stringify(error))
+            //console.log(JSON.stringify(error))
             //log out if unauthorized (expired token)
             if (error.response.status === 401) {
                 props.logOutUser()
@@ -52,76 +50,29 @@ function HabitTable(props) {
 
     useEffect(() =>{
         reloadHabits()
-    }, []);
-
-    const findHabit = (attribute, value) => {
-        for (let [index, habit] of habits.entries()) {
-            if (habit[attribute] == value) {
-                return index;
-            }
-        }
-        return -1;
-    }
-
-    const handleChange = (event) => {
-        //locate habit that event refers to
-        const habitIndex = findHabit("habit_id", event.target.name);
-        let index = -1;
-        let action = 'add';
-        if (habits[habitIndex].habit_action.includes(event.target.value)) {
-            index = habits[habitIndex].habit_action.indexOf(event.target.value);
-            action = 'delete';
-        }
-        //send request to backend to make change in database
-        const promise = habitTableActions.updateHabitAction(event.target.name,event.target.value, action);
-        //once we get a successful response, modify the info on the front end to match what is now in the db
-        const dataPromise = promise.then((response) => {
-            let newHabits = JSON.parse(JSON.stringify(habits));
-            if (index > -1){
-                newHabits[habitIndex].habit_action.splice(index, 1);
-            } else {
-                newHabits[habitIndex].habit_action.push(event.target.value);
-            }
-            setHabits(newHabits);
-        });
-    }
-
-
+    },[]);
 
     return (
-        <div>
-               <table>
+        <div id = "HabitTableDiv">
+               <table id='HabitTable'>
                     <thead>
-                        <tr rowSpan="2">
-                            <th rowSpan = "2" key="HabitIDHeader">Habit ID</th>
-                            <th rowSpan="2" key="HabitNameHeader">Habit Name</th>
+                        <tr rowSpan="1" id="HeaderRow1">
+                            <th rowSpan = "1" id="HabitIDHeader"></th>
+                            <th rowSpan="1" id="HabitNameHeader">Habit</th>
                             {dates.map((dt, index) => (
                                 <th key = {`day${index}Header`}>
-                                    {dayRef[dt.getDay()]}
+                                    <Box>
+                                        <Typography variant="body2">{dayRef[dt.getDay()]}</Typography>
+                                        <Typography variant="body1">{dt.getDate()}</Typography>
+                                    </Box>
                                 </th>
                             ))}
                         </tr>
-                        <tr>
-                            {dates.map((dt, index) => (
-                                <th date={formatDate(dt)} key = {`date${index}Header`}>{dt.getDate() }</th>
-                            ))}
-                        </tr>
                     </thead>
-                    <tbody>
-                    {habits.map((h, index) => (
-                        <tr key={`HabitRow${index}`}>
-                            <td key={`HabitID${index}`}>{h.habit_id}</td>
-                            <td key={`HabitTitle${index}`}>{h.habit_title}</td>
-                            {formatedDates.map((dt) => (
-                                <td date={dt} key={`HabitAction_${dt}_${index}`}>
-                                    <Checkbox name={h.habit_id} value = {dt} checked ={h.habit_action.includes(dt) } onClick={handleChange}/>
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                    </tbody>
+                    <HabitTableRows habits={habits} setHabits={setHabits}
+                                    formattedDates={formattedDates} history={history}/>
                     <tfoot>
-                        <CreateHabitForm habits = {habits} setHabits = {setHabits}/>
+                        <CreateHabitForm habits = {habits} setHabits = {setHabits} history={history}/>
                     </tfoot>
                 </table>
         </div>

@@ -1,7 +1,6 @@
-import {axios} from "axios";
-import {useHistory} from "react-router-dom";
+//import {axios} from "axios";
 
-const API_URL = "http://localhost:5000/auth/";
+//const API_URL = "http://localhost:5000/auth/";
 
 
 const getCurrentUser = () => {
@@ -12,7 +11,6 @@ const logout = () => {
     localStorage.removeItem("user");
 };
 
-export default {
-    logout,
-    getCurrentUser,
-};
+const AuthActions = {logout, getCurrentUser};
+
+export default AuthActions;

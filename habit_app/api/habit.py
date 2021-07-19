@@ -9,6 +9,15 @@ import pandas as pd
 
 from flask_restful import Resource
 
+def check_habit_exists_helper(db, habit_id):
+    """
+    Check that a given habit id exists for current user
+    :param db: database connection
+    :param habit_id: integer representing a habit stored in the db
+    :return: bool
+    """
+    return db.execute("SELECT EXISTS(SELECT 1 from HABIT where username = (?) and habit_id = (?))",
+                    (get_jwt_identity(), habit_id)).fetchone()[0] == 1
 
 def get_habit_title_helper(db):
     """
@@ -67,6 +76,25 @@ class AddHabit(Resource): #/habit
 
 
 class ModHabit(Resource):  # /habit/<int:habit_id>
+    @jwt_required()
+    def put(self, habit_id):
+        """Used for updating title of a habit"""
+        db = database.get_db()
+        #check that we have a new title
+        new_title = request.json.get('habit_title')
+        if new_title is None:
+            return {'msg': 'request must have a body with the argument "habit_title"'}, 400
+        #check that habit exists - if not return 404
+        if check_habit_exists_helper(db, habit_id) == False:
+            return {}, 404
+        else:
+            sql = "UPDATE HABIT SET title = (?) WHERE username = (?) and habit_id = (?)"
+            db.execute(sql, (new_title, get_jwt_identity(), habit_id))
+            db.commit()
+            return {}, 204
+
+
+
     @jwt_required()
     def delete(self, habit_id):
         #TODO: Check if habit exists, if not return 404
