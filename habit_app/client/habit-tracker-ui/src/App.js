@@ -44,7 +44,7 @@ function App(props) {
                     </Link>
                 </Drawer>
             </div>
-            <div class="Content-container" style={{marginLeft:"10%"}}>
+            <div class="Content-container">
                 <Switch>
                     <Route path="/auth/create-account">
                         <CreateUserForm/>

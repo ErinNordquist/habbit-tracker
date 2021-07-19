@@ -1,0 +1,17 @@
+version: "3.4"
+
+services:
+  server:
+    build: .
+    expose:
+      - 5000
+    ports:
+      - "5000:5000"
+    network_mode: "host"
+  client:
+    build: ./habit_app/client/habit-tracker-ui
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+
