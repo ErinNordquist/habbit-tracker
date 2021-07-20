@@ -17,7 +17,55 @@ table {
     border: 1px solid black;
 }
 
+
+/*Style real input*/
 .Habit-checkbox {
-    opacity:100%;
-    background-color: red;
+    opacity:0%;
+    /*left: 0;*/
+    position: absolute;
 }
+/*Set up Boxes*/
+.Habit-checkbox:not(:checked) + .Habit-checkbox-label,
+.Habit-checkbox:checked + .Habit-checkbox-label {
+    position: relative;
+    padding-left: 1.2em;
+    font-size: 1.05em;
+    line-height: 1.7;
+    cursor: pointer;
+}
+
+/*Style Boxes when not checked*/
+.Habit-checkbox:not(:checked) + .Habit-checkbox-label:before{
+    content: '';
+    position: absolute;
+    /*top: 70%;*/
+    left: 0;
+    font-size: 1.375em;
+    background: inherit;
+    line-height: 0;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+
+    width: 100%;
+    height: 100%;
+    border: 1px solid #aaa;
+}
+/*Style boxes when checked*/
+.Habit-checkbox:checked + .Habit-checkbox-label:after{
+    content: '';
+    position: absolute;
+    /*top: .525em;*/
+    left: 0;
+    padding: 0 0 0 0;
+    font-size: 1.375em;
+    background: #CB22ED;
+    line-height: 0;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+
+    width: 100%;
+    height: 100%;
+    border: 1px solid #aaa;
+}
+
+

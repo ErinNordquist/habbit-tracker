@@ -50,9 +50,13 @@ function HabitTableRows(props) {
                                     history={props.history}/>
                     {props.formattedDates.map((dt) => (
                         <td date={dt} key={`HabitAction_${dt}_${index}`}>
+                            <div class="wrapper">
                             <input type="checkbox" name={h.habit_id} value = {dt}
                                    checked ={h.habit_action.includes(dt) } onClick={handleChange}
                                    class="Habit-checkbox" id={`HabitAction_checkbox_${dt}_${index}`}/>
+                            <label for={`HabitAction_checkbox_${dt}_${index}`} class="Habit-checkbox-label">
+                            </label>
+                            </div>
 
                         </td>
                     ))}
