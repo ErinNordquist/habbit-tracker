@@ -53,8 +53,7 @@ function HabitTableRows(props) {
                             <input type="checkbox" name={h.habit_id} value = {dt}
                                    checked ={h.habit_action.includes(dt) } onClick={handleChange}
                                    class="Habit-checkbox" id={`HabitAction_checkbox_${dt}_${index}`}/>
-                            <label for={`HabitAction_checkbox_${dt}_${index}`} class="Habit-checkbox-label">
-                            </label>
+                            <label for={`HabitAction_checkbox_${dt}_${index}`} class="Habit-checkbox-label"/>
                         </td>
                     ))}
                 </tr>

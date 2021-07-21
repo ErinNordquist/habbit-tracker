@@ -1,8 +1,10 @@
 import habitTableActions from "../actions/habitTableActions";
 import '../css/HabitTable.css';
 import {useState} from "react";
-import {IconButton, TextField} from "@material-ui/core";
+import {Button, IconButton, Menu, MenuItem, TextField} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import HabitEditMenu from "./HabitEditMenu.js"
 
 function HabitTitleCell(props) {
     const habitIndex = props.habitIndex;
@@ -49,12 +51,40 @@ function HabitTitleCell(props) {
         //props.setHabits(habits);
 
     }
+
+    const [anchorEl, open] = useState(null);
+    const handleClick = (event) => {
+        open(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        open(null);
+    };
     return (
         <>
             <td key={`EditButtonCell${props.habitIndex}`}>
-                <IconButton key={`EditButton${props.habitIndex}`} onClick={handleEditPush} >
-                    <EditIcon/>
-                </IconButton>
+                {/*<IconButton key={`EditButton${props.habitIndex}`} onClick={handleEditPush} >*/}
+                {/*    <MoreVertIcon/>*/}
+                {/*</IconButton>*/}
+                <div>
+                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        <MoreVertIcon/>
+                    </Button>
+                    <Menu id={`Menu${props.habitIndex}`}
+                        anchorEl={anchorEl}
+                          anchorOrigin={{vertical:'bottom',horizontal:'right',}}
+                          transformOrigin={{vertical: 'top', horizontal: 'right',}}
+                          keepMounted
+                          open={Boolean(anchorEl)}
+                          onClose={handleClose}>
+                        <MenuItem onClick={handleEditPush}>
+                            Edit
+                        </MenuItem>
+                        <MenuItem onClick={()=>{}}>
+                            Delete
+                        </MenuItem>
+                    </Menu>
+                </div>
             </td>
             <td key={`HabitTitleCell${props.habitIndex}`}>
                 {textCell}

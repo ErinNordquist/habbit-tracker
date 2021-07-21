@@ -6,16 +6,23 @@
 .HabitTitleCell {
     column-width: 250px;
     line-height: 60px;
-    border: inherit;
+    /*border: inherit;*/
 }
 
 .MuiIconButton-root > * {
     pointer-events: none;
 }
 
-table {
+/*table, th, td */
+table{
     border: 1px solid black;
 }
+/*tr {*/
+/*    height: 10%;*/
+/*}*/
+/*thead {*/
+/*    border-bottom: 1px solid black;*/
+/*}*/
 
 
 /*Style real input*/
@@ -38,7 +45,7 @@ table {
 .Habit-checkbox:not(:checked) + .Habit-checkbox-label:before{
     content: '';
     position: absolute;
-    /*top: 70%;*/
+    /*top: 0;*/
     left: 0;
     font-size: 1.375em;
     background: inherit;
