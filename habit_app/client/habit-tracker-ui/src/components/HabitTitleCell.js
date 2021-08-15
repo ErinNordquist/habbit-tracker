@@ -52,6 +52,13 @@ function HabitTitleCell(props) {
 
     }
 
+    const handleDeletePush = (event) => {
+        habitTableActions.deleteHabit(props.habits[habitIndex].habit_id, props.history).then(() => {
+            props.setHabits(props.habits.filter(item => item !== props.habits[props.habitIndex]));
+            }
+        );//.catch();
+    }
+
     const [anchorEl, open] = useState(null);
     const handleClick = (event) => {
         open(event.currentTarget);
@@ -80,7 +87,7 @@ function HabitTitleCell(props) {
                         <MenuItem onClick={handleEditPush}>
                             Edit
                         </MenuItem>
-                        <MenuItem onClick={()=>{}}>
+                        <MenuItem onClick={handleDeletePush}>
                             Delete
                         </MenuItem>
                     </Menu>

@@ -47,11 +47,19 @@ function updateHabitTitle(habit_id, new_habit_title, history) {
     const requestURL = API_URL+`habit/${habit_id}`;
     console.log(new_habit_title);
     const requestBody = {habit_title: `${new_habit_title}`};
-    const promise = axios.put(requestURL, requestBody,{headers:authHeader()})
+    const promise = axios.put(requestURL, requestBody,{headers:authHeader()});
     checkForExpiredToken(promise);
     return promise;
 }
 
-const habitTableActions = {getHabits,updateHabitAction, addHabit, updateHabitTitle};
+function deleteHabit(habit_id, history) {
+    const requestURL = API_URL+`habit/${habit_id}`;
+    console.log(`delete habit ${habit_id}`);
+    const promise = axios.delete(requestURL, {headers:authHeader()});
+    checkForExpiredToken(promise);
+    return promise;
+}
+
+const habitTableActions = {getHabits,updateHabitAction, addHabit, updateHabitTitle, deleteHabit};
 
 export default habitTableActions;
