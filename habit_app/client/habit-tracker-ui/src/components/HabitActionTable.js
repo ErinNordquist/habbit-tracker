@@ -7,7 +7,7 @@ function HabitActionTable(props) {
             <thead>
                 <tr>
                     <th>Habit</th>
-                    <th>Habit Action Date</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
