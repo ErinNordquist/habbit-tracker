@@ -6,7 +6,6 @@ function HabitActionTable(props) {
         <table>
             <thead>
                 <tr>
-                    <th>Habit ID</th>
                     <th>Habit</th>
                     <th>Habit Action Date</th>
                 </tr>
@@ -15,7 +14,6 @@ function HabitActionTable(props) {
             {props.habits.map((hbt, index) => (
                 hbt['habit_action'].map((hbt_actn)=>(
                 <tr>
-                    <td>{hbt['habit_id']}</td>
                     <td>{hbt['habit_title']}</td>
                     <td>{hbt_actn}</td>
                 </tr>
