@@ -1,4 +1,5 @@
 import HabitTable from "../components/HabitTable";
+import HabitActionTable from "../components/HabitActionTable";
 import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import habitTableActions from "../actions/habitTableActions";
@@ -48,8 +49,20 @@ function HomePage(props) {
     },[]);
 
     return (
-        <div>
+        <div id="HomePageDiv">
             <HabitTable
+                loggedIn = {props.loggedIn}
+                logOutUser={props.logOutUser}
+                habits={habits}
+                setHabits={habits}
+                dates={dates}
+                setDates={setDates}
+                formattedDates={formattedDates}
+                setFormattedDates={setFormattedDates}
+                dayRef={dayRef}
+                history={history}
+            />
+            <HabitActionTable
                 loggedIn = {props.loggedIn}
                 logOutUser={props.logOutUser}
                 habits={habits}
