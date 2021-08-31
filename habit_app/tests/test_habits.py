@@ -58,11 +58,13 @@ def test_delete_habit(client, auth, habit_title, habit_id, outcome):
     (
         ('www', 'xxx',
          [{'habit_id':1, 'habit_title':'placeholder habit 1', 'habit_action': ['']},
-          {'habit_id':2, 'habit_title':'placeholder habit 2', 'habit_action': ['']}]
+          {'habit_id':2, 'habit_title':'placeholder habit 2', 'habit_action': ['']},
+          {'habit_id': 4, 'habit_title': 'placeholder habit 3', 'habit_action': ['']}]
         , '2020-01-10', '2020-01-18', 200),
         ('www', 'xxx',
          [{'habit_id': 1, 'habit_title': 'placeholder habit 1', 'habit_action': ['2021-06-12', '2021-06-13']},
-          {'habit_id': 2, 'habit_title': 'placeholder habit 2', 'habit_action': ['2021-06-13']}],
+          {'habit_id': 2, 'habit_title': 'placeholder habit 2', 'habit_action': ['2021-06-13']},
+          {'habit_id': 4, 'habit_title': 'placeholder habit 3', 'habit_action': ['']}],
          '2021-06-12', '2021-06-19', 200),
         ('zzz', 'aaa',
          [{'habit_id': 3, 'habit_title': 'habit 1', 'habit_action': ['2021-06-16']}],

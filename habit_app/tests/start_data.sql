@@ -12,7 +12,8 @@ INSERT INTO HABIT (username, title, date_created)
 values
 ('www','placeholder habit 1', '2021-06-11'),
 ('www','placeholder habit 2', '2021-06-04'),
-('zzz', 'habit 1', '2021-06-15');
+('zzz', 'habit 1', '2021-06-15'),
+('www','placeholder habit 3', '2021-07-10');
 
 INSERT INTO HABIT_ACTION (username, habit_id, action_dt)
 values
