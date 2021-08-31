@@ -1,6 +1,10 @@
-#HabitTableDiv {
+#HomePageDiv {
     table-layout: auto;
     margin:2vh;
+}
+
+#HabitTableDiv{
+    margin-bottom: 2vh;
 }
 
 .HabitTitleCell {
