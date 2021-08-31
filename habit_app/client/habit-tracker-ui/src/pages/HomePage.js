@@ -54,7 +54,7 @@ function HomePage(props) {
                 loggedIn = {props.loggedIn}
                 logOutUser={props.logOutUser}
                 habits={habits}
-                setHabits={habits}
+                setHabits={setHabits}
                 dates={dates}
                 setDates={setDates}
                 formattedDates={formattedDates}
