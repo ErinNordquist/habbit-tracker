@@ -1,10 +1,9 @@
 import './css/App.css';
 import {useState} from "react";
-import HabitTable from "./components/HabitTable";
 import CreateUserForm from "./components/CreateUserForm";
 import LoginForm from "./components/LoginForm";
 import {AppBar,Drawer} from '@material-ui/core';
-
+import HomePage from "./pages/HomePage";
 import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
 import AuthActions from "./actions/AuthActions";
 import {StyledButton, StyledDrawer} from "./components/styles"
@@ -53,7 +52,7 @@ function App(props) {
                         <LoginForm logInUser = {logInUser} loggedIn={loggedIn}/>
                     </Route>
                     <Route path="/home">
-                        <HabitTable loggedIn = {loggedIn} logOutUser={logOutUser}/>
+                        <HomePage loggedIn = {loggedIn} logOutUser={logOutUser}/>
                     </Route>
 
                 </Switch>
