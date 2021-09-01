@@ -36,9 +36,25 @@ def get_habits_helper(db, start_date, end_date):
         start_date: str; represents the first date (inclusive) in search range
         end_date: str; represents the last date (inclusive) in search range
     """
-    sql = f"""SELECT * FROM habit_action 
-    WHERE username = (?) AND action_dt BETWEEN DATE('{start_date}') AND DATE('{end_date}')"""
-    return db.execute(sql, (get_jwt_identity(),)).fetchall()
+    sql = """SELECT habit.habit_id, title, action_dt 
+              FROM habit LEFT OUTER JOIN (SELECT * FROM habit_action 
+                                          WHERE action_dt BETWEEN DATE(?) AND DATE(?)
+                                          ) dated_actions on habit.habit_id = dated_actions.habit_id
+              WHERE habit.username = (?) 
+           """
+    return db.execute(sql, (start_date, end_date, get_jwt_identity())).fetchall()
+
+def get_habits_helper(db, rows):
+    """
+    overloaded function to get a ce
+    :param rows:rtain number of records rather than limit by date
+    :param db:
+    :return:
+    """
+    sql=f"""SELECT habit.habit_id, title, action_dt 
+              FROM habit LEFT OUTER JOIN habit_action on habit.habit_id = dated_actions.habit_id
+              WHERE habit.username = (?)  ORDER BY action_dt DESC LIMIT (?)"""
+    return db.execute(sql, (get_jwt_identity(), rows)).fetchall()
 
 
 class GetHabits(Resource): #/home
@@ -46,19 +62,23 @@ class GetHabits(Resource): #/home
     def get(self, start_date, end_date):
 
         db = database.get_db()
-        habit_titles = get_habit_title_helper(db)
-        habit_titles_df = pd.DataFrame(habit_titles, columns=['habit_id', 'habit_title'])
-        #print(habit_titles_df)
-        habit_actions = get_habits_helper(db, start_date, end_date)
-        habit_actions_df = pd.DataFrame(habit_actions, columns=['username','habit_id','habit_action'])
-        #print(habit_actions_df)
-        habit_data_df = habit_titles_df.merge(habit_actions_df, on='habit_id', how='outer').fillna("")
-        #print(habit_data_df)
-        habit_data_df = habit_data_df.groupby(['habit_id', 'habit_title'])['habit_action'].apply(list).reset_index(drop=False)
+        habit_data_df = get_habits_helper(db, start_date, end_date)
+        print('pulled data:', habit_data_df)
+        habit_data_df = pd.DataFrame(habit_data_df, columns=['habit_id', 'habit_title', 'habit_action']).fillna("")
+        habit_data_df = habit_data_df.groupby(['habit_id', 'habit_title']
+                                              )['habit_action'].apply(list).reset_index(drop=False)
 
         habit_resp = {'habit_data': habit_data_df.to_dict(orient='records')}
         print(habit_resp)
         return habit_resp, 200
+
+    # @jwt_required()
+    # def get(self, number_of_rows):
+    #     db = database.get_db()
+    #     habit_titles = get_habit_title_helper(db)
+    #     habit_titles_df = pd.DataFrame(habit_titles, columns=['habit_id', 'habit_title'])
+    #     habit_actions = get_habits_helper(db, number_of_rows)
+
 
 
 class AddHabit(Resource): #/habit
@@ -106,19 +126,3 @@ class ModHabit(Resource):  # /habit/<int:habit_id>
         db.commit()
 
         return 200
-
-
-
-
-
-
-
-# class GetHabitActions(Resource): # /get-habit-actions ?
-#     """
-#     This Class is for fetching data primarily.
-#     """
-#     @jwt_required()
-#     def get(self):
-#         #fetch habit actions from db
-#         #configure into proper json format
-#         #respond
