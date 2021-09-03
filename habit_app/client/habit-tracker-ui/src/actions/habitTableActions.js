@@ -14,11 +14,11 @@ function checkForExpiredToken(promise, history) {
     })
 }
 
-function getHabits(start_date, end_date, history) {
+function getHabits(history) {
     //console.log('called getHabits function');
     //console.log(authHeader());
 
-    const promise = axios.get(API_URL+"home/"+start_date+"&"+end_date, {headers: authHeader()});
+    const promise = axios.get(API_URL+"home/", {headers: authHeader()});
     checkForExpiredToken(promise, history);
     return promise;
 };

@@ -33,7 +33,7 @@ function HomePage(props) {
     let history = useHistory();
 
     const reloadHabits = () => {
-        habitTableActions.getHabits(formattedDates[0],formattedDates[6], history).then((response) => {
+        habitTableActions.getHabits(history).then((response) => {
             let data = response.data
             setHabits(data.habit_data);
         }).catch(function (error) {

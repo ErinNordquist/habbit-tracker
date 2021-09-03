@@ -46,7 +46,7 @@ def create_app(config):
     api.add_resource(HelloWorld, '/<string:name>')
     api.add_resource(CreateAccount, '/auth/create-account')
     api.add_resource(Login, '/auth/login')
-    api.add_resource(GetHabits, '/home/<string:start_date>&<string:end_date>')
+    api.add_resource(GetHabits, '/home')
     api.add_resource(AddHabit, '/habit')
     api.add_resource(ModHabit, '/habit/<int:habit_id>')
     api.add_resource(UpdateHabitActions, '/update/<string:habit_id>&<string:habit_action>')
