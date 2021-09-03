@@ -18,7 +18,7 @@ function getHabits(history) {
     //console.log('called getHabits function');
     //console.log(authHeader());
 
-    const promise = axios.get(API_URL+"home/", {headers: authHeader()});
+    const promise = axios.get(API_URL+"home", {headers: authHeader()});
     checkForExpiredToken(promise, history);
     return promise;
 };
