@@ -25,9 +25,9 @@ function App(props) {
 
   return (
     <div className="App">
-        <header class="App-header" position="fixed">Habit Tracker</header>
+        <header className="App-header" position="fixed">Habit Tracker</header>
         <BrowserRouter>
-            <div class="Nav-container">
+            <div className="Nav-container">
                 <Drawer variant="permanent" anchor="left" classes={{root:"Nav-container"}} PaperProps={{ className: "Nav-container" }}>
                     <Link to="/auth/create-account" >
                         <StyledButton>Create Account</StyledButton>
@@ -43,7 +43,7 @@ function App(props) {
                     </Link>
                 </Drawer>
             </div>
-            <div class="Content-container">
+            <div className="Content-container">
                 <Switch>
                     <Route path="/auth/create-account">
                         <CreateUserForm/>
