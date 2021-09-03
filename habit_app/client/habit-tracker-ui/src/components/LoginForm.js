@@ -7,7 +7,7 @@ import '../css/App.css';
 
 function LoginForm(props) {
     let history = useHistory();
-    // useEffect(() =>{
+
     if (AuthActions.getCurrentUser() !== null) {
         history.push("/home");
     };
@@ -20,17 +20,11 @@ function LoginForm(props) {
             if (response.data.hasOwnProperty('error')){
                 setError("username",{type:"validate",message:response.data.error})
             } else {
-                //console.log(response.data);
                 localStorage.setItem("user", JSON.stringify(response.data));
-                //console.log('in local storage:')
-               // console.log(localStorage.getItem('user'));
-                props.logInUser();
                 history.push("/home");
             }
         }).catch((error) => {
             console.log(error);
-            //history.push('/');
-
         });
     }
     return (

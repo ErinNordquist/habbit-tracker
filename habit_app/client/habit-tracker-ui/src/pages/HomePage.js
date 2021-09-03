@@ -51,8 +51,6 @@ function HomePage(props) {
     return (
         <div id="HomePageDiv">
             <HabitTable
-                loggedIn = {props.loggedIn}
-                logOutUser={props.logOutUser}
                 habits={habits}
                 setHabits={setHabits}
                 dates={dates}
@@ -63,8 +61,6 @@ function HomePage(props) {
                 history={history}
             />
             <HabitActionTable
-                loggedIn = {props.loggedIn}
-                logOutUser={props.logOutUser}
                 habits={habits}
                 setHabits={habits}
                 dates={dates}

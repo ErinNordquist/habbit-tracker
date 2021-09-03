@@ -9,19 +9,6 @@ import AuthActions from "./actions/AuthActions";
 import {StyledButton, StyledDrawer} from "./components/styles"
 
 function App(props) {
-    //AuthActions.logout();
-    //console.log(AuthActions.getCurrentUser());
-    //const [user, setUser] = useState();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           AuthActions.getCurrentUser());
-    const [loggedIn, setLoggedIn] = useState(AuthActions.getCurrentUser() !== null);
-
-    const logInUser = () => {
-        //setUser(username);
-        setLoggedIn(AuthActions.getCurrentUser() !== null);
-    }
-    const logOutUser = () => {
-        AuthActions.logout();
-        setLoggedIn(AuthActions.getCurrentUser() !== null);
-    }
 
   return (
     <div className="App">
@@ -39,7 +26,8 @@ function App(props) {
                         <StyledButton>Home</StyledButton>
                     </Link>
                     <Link to="/auth/login">
-                        <StyledButton onClick={logOutUser}>Log Out</StyledButton>
+                        <StyledButton //onClick={logOutUser}
+                        >Log Out</StyledButton>
                     </Link>
                 </Drawer>
             </div>
@@ -49,10 +37,12 @@ function App(props) {
                         <CreateUserForm/>
                     </Route>
                     <Route  path="/auth/login" exact>
-                        <LoginForm logInUser = {logInUser} loggedIn={loggedIn}/>
+                        <LoginForm //logInUser = {logInUser} loggedIn={loggedIn}
+                        />
                     </Route>
                     <Route path="/home">
-                        <HomePage loggedIn = {loggedIn} logOutUser={logOutUser}/>
+                        <HomePage //loggedIn = {loggedIn} logOutUser={logOutUser}
+                        />
                     </Route>
 
                 </Switch>
