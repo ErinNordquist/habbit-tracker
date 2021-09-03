@@ -26,8 +26,7 @@ function App(props) {
                         <StyledButton>Home</StyledButton>
                     </Link>
                     <Link to="/auth/login">
-                        <StyledButton //onClick={logOutUser}
-                        >Log Out</StyledButton>
+                        <StyledButton onClick={()=>{AuthActions.logout()}}>Log Out</StyledButton>
                     </Link>
                 </Drawer>
             </div>
@@ -37,12 +36,10 @@ function App(props) {
                         <CreateUserForm/>
                     </Route>
                     <Route  path="/auth/login" exact>
-                        <LoginForm //logInUser = {logInUser} loggedIn={loggedIn}
-                        />
+                        <LoginForm/>
                     </Route>
                     <Route path="/home">
-                        <HomePage //loggedIn = {loggedIn} logOutUser={logOutUser}
-                        />
+                        <HomePage/>
                     </Route>
 
                 </Switch>
