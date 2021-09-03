@@ -34,25 +34,31 @@ function LoginForm(props) {
         });
     }
     return (
-        <div class="User-form-div">
+        <div className="User-form-div">
             <h1>Login</h1>
             <form  onSubmit={e => e.preventDefault()}>
-                <ul class="Form-element"><Controller
+                <ul className="Form-element"><Controller
                     name="username"
                     control={control}
                     defaultValue=""
                     rules={{required: true}}
-                    render={({ field }) => <TextField label="Username" value={field.value} inputRef={field.ref} onChange={field.onChange} />}
+                    render={({ field }) =>
+                            <TextField label="Username" value={field.value}
+                                       inputRef={field.ref} onChange={field.onChange} />}
                 /></ul>
-                <ul class="Form-element"><Controller
+                <ul className="Form-element"><Controller
                     name="password"
                     control={control}
                     defaultValue=""
                     rules={{required: true}}
-                    render={({ field }) => <TextField label="Password" type="password" value={field.value} inputRef={field.ref} onChange={field.onChange} />}
+                    render={({ field }) =>
+                        <TextField label="Password" type="password" value={field.value}
+                                   inputRef={field.ref} onChange={field.onChange} />}
                 /></ul>
                 {errors.username && <div>{errors.username.message}</div>}
-                <ul class="Form-element"><Button type="submit" value="submit" onClick={handleSubmit(onSubmit)}>Submit</Button></ul>
+                <ul className="Form-element">
+                    <Button type="submit" value="submit" onClick={handleSubmit(onSubmit)}>Submit</Button>
+                </ul>
             </form>
         </div>
     );
