@@ -37,7 +37,7 @@ function LoginForm(props) {
                     defaultValue=""
                     rules={{required: true}}
                     render={({ field }) =>
-                            <TextField label="Username" value={field.value}
+                            <TextField id="loginUserTextField" label="Username" value={field.value}
                                        inputRef={field.ref} onChange={field.onChange} />}
                 /></ul>
                 <ul className="Form-element"><Controller
@@ -46,12 +46,13 @@ function LoginForm(props) {
                     defaultValue=""
                     rules={{required: true}}
                     render={({ field }) =>
-                        <TextField label="Password" type="password" value={field.value}
+                        <TextField id="loginPassTextField" label="Password" type="password" value={field.value}
                                    inputRef={field.ref} onChange={field.onChange} />}
                 /></ul>
                 {errors.username && <div>{errors.username.message}</div>}
                 <ul className="Form-element">
-                    <Button type="submit" value="submit" onClick={handleSubmit(onSubmit)}>Submit</Button>
+                    <Button id="loginSubmitButton" type="submit" value="submit"
+                            onClick={handleSubmit(onSubmit)}>Submit</Button>
                 </ul>
             </form>
         </div>
