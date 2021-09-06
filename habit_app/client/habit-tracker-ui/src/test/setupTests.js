@@ -12,6 +12,7 @@ beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement("div");
     document.body.appendChild(container);
+    localStorage.removeItem('user') ;
 });
 
 afterEach(() => {
@@ -19,6 +20,7 @@ afterEach(() => {
     unmountComponentAtNode(container);
     container.remove();
     container = null;
+    //localStorage.removeItem('user') ;
 });
 
 
