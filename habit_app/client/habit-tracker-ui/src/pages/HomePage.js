@@ -3,6 +3,7 @@ import HabitActionTable from "../components/HabitActionTable";
 import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import habitTableActions from "../actions/habitTableActions";
+import AuthActions from "../actions/AuthActions";
 
 
 function HomePage(props) {
@@ -39,8 +40,8 @@ function HomePage(props) {
         }).catch(function (error) {
             //log out if unauthorized (expired token)
             if (error.response.status === 401) {
-                props.logOutUser()
-                history.push('/auth/login')
+                AuthActions.logout();
+                history.push('/auth/login');
             }
         });
     }
