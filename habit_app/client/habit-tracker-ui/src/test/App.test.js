@@ -1,8 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 import '@testing-library/jest-dom';
-import { unmountComponentAtNode } from "react-dom";
-let container = null;
+
+
+const mockHistoryPush = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
 
 describe('my app', () => {
   test('loads title', () => {
