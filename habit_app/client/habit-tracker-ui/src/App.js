@@ -1,12 +1,11 @@
 import './css/App.css';
-import {useState} from "react";
 import CreateUserForm from "./components/CreateUserForm";
 import LoginForm from "./components/LoginForm";
-import {AppBar,Drawer} from '@material-ui/core';
+import {Drawer} from '@material-ui/core';
 import HomePage from "./pages/HomePage";
 import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
 import AuthActions from "./actions/AuthActions";
-import {StyledButton, StyledDrawer} from "./components/styles"
+import {StyledButton} from "./components/styles"
 
 function App(props) {
 
@@ -41,7 +40,6 @@ function App(props) {
                     <Route path="/home">
                         <HomePage id={'homePageComponent'}/>
                     </Route>
-
                 </Switch>
             </div>
         </BrowserRouter>

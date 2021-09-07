@@ -1,4 +1,3 @@
-import {useState} from "react";
 
 function HabitActionTable(props) {
 
@@ -13,12 +12,10 @@ function HabitActionTable(props) {
             <tbody>
             {props.habits.map((hbt, index) => (
                 hbt['habit_action'].map((hbt_actn)=>(
-                <tr>
-                    <td>{hbt['habit_title']}</td>
-                    <td>{hbt_actn}</td>
-                </tr>
-                ))
-            ))}
+                <tr key={`habitActionRow${hbt}${hbt_actn}`}>
+                    <td key={`habitActionTitleCell${hbt}${hbt_actn}`}>{hbt['habit_title']}</td>
+                    <td key={`habitActionCell${hbt}${hbt_actn}`}>{hbt_actn}</td>
+                </tr>))))}
             </tbody>
         </table>
     );

@@ -1,10 +1,10 @@
 import habitTableActions from "../actions/habitTableActions";
 import '../css/HabitTable.css';
 import {useState} from "react";
-import {Button, IconButton, Menu, MenuItem, TextField} from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+import {Button, Menu, MenuItem, TextField} from "@material-ui/core";
+
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import HabitEditMenu from "./HabitEditMenu.js"
+
 
 function HabitTitleCell(props) {
     const habitIndex = props.habitIndex;

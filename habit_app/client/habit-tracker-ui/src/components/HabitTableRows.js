@@ -1,5 +1,4 @@
-import {Checkbox} from "@material-ui/core";
-//import EditIcon from "@material-ui/icons/Edit";
+
 import habitTableActions from "../actions/habitTableActions";
 import '../css/HabitTable.css';
 import HabitTitleCell from "./HabitTitleCell";
@@ -51,14 +50,12 @@ function HabitTableRows(props) {
                         <td date={dt} key={`HabitAction_${dt}_${index}`}>
                             <input type="checkbox" name={h.habit_id} value = {dt}
                                    checked ={h.habit_action.includes(dt) } onClick={handleChange}
-                                   class="Habit-checkbox" id={`HabitAction_checkbox_${dt}_${index}`}/>
-                            <label for={`HabitAction_checkbox_${dt}_${index}`} class="Habit-checkbox-label"/>
-                        </td>
-                    ))}
-                </tr>
-            ))}
+                                   onChange={()=>{}}
+                                   className="Habit-checkbox" id={`HabitAction_checkbox_${dt}_${index}`}/>
+                            <label htmlFor={`HabitAction_checkbox_${dt}_${index}`} className="Habit-checkbox-label"/>
+                        </td>))}
+                </tr>))}
         </tbody>
-
     );
 }
 export default HabitTableRows;

@@ -1,9 +1,6 @@
-import {useEffect, useState} from "react";
-import habitTableActions from "../actions/habitTableActions"
-import {useHistory} from "react-router-dom";
 import CreateHabitForm from "./CreateHabitForm";
 import HabitTableRows from "./HabitTableRows";
-import {Slide, Card, CardContent, Typography, Box} from '@material-ui/core';
+import {Typography, Box} from '@material-ui/core';
 import '../css/HabitTable.css';
 
 function HabitTable(props) {
@@ -20,8 +17,7 @@ function HabitTable(props) {
                                         <Typography variant="body2">{props.dayRef[dt.getDay()]}</Typography>
                                         <Typography variant="body1">{dt.getDate()}</Typography>
                                     </Box>
-                                </th>
-                            ))}
+                                </th>))}
                         </tr>
                     </thead>
                     <HabitTableRows habits={props.habits} setHabits={props.setHabits}

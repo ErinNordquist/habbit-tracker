@@ -47,7 +47,7 @@ function HomePage(props) {
     }
     useEffect(() =>{
         reloadHabits()
-    },[]);
+    });
 
     return (
         <div id="HomePageDiv">
