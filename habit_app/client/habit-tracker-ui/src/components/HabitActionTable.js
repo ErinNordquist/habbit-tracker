@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 function HabitActionTable(props) {
-    console.log(props.habits);
+
     return (
         <table>
             <thead>

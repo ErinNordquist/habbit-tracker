@@ -5,7 +5,6 @@ import '../css/HabitTable.css';
 import HabitTitleCell from "./HabitTitleCell";
 
 function HabitTableRows(props) {
-    console.log(props.history);
     const findHabit = (attribute, value) => {
         for (let [index, habit] of props.habits.entries()) {
             if (habit[attribute] == value) {
