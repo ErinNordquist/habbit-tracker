@@ -40,12 +40,14 @@ function HabitTableRows(props) {
         <tbody id='HabitTableRows' >
             {props.habits.map((h, index) => (
                 <tr key={`HabitRow${index}`}>
-                    <HabitTitleCell key={`HabitTitle${index}`}
+                    <HabitTitleCell key={`HabitTitle${h.habit_id}`}
                                     //value={h.habit_title}
                                     habits = {props.habits}
                                     setHabits={props.setHabits}
-                                    habitIndex = {index}
-                                    history={props.history}/>
+                                    habitID = {h.habit_id}
+                                    history={props.history}
+                                    findHabit={findHabit}
+                    />
                     {props.formattedDates.map((dt) => (
                         <td date={dt} key={`HabitAction_${dt}_${index}`}>
                             <input type="checkbox" name={h.habit_id} value = {dt}

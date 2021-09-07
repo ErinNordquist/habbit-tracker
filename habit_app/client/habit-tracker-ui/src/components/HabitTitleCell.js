@@ -7,15 +7,17 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 function HabitTitleCell(props) {
-    const habitIndex = props.habitIndex;
+    const habitID = props.habitID;
+    const habitIndex = props.findHabit("habit_id",habitID);
+    const habitTitle = props.habits[habitIndex].habit_title;
     let habits = Array.from(props.habits);
-    const [textCell, setTextCell] = useState(props.habits[habitIndex].habit_title);
-    let inputValue = props.habits[habitIndex].habit_title;
+    const [textCell, setTextCell] = useState(habitTitle);
+    let inputValue = habitTitle;
 
     const handleKeyUp = (event) => {
         if (event.keyCode === 13) {
             //console.log(inputValue);
-            habitTableActions.updateHabitTitle(habits[habitIndex].habit_id, inputValue, props.history)
+            habitTableActions.updateHabitTitle(habitID, inputValue, props.history)
                 .then((response) => {
                 habits[habitIndex].habit_title = inputValue;
                 setTextCell(habits[habitIndex].habit_title);
@@ -54,7 +56,7 @@ function HabitTitleCell(props) {
 
     const handleDeletePush = (event) => {
         habitTableActions.deleteHabit(props.habits[habitIndex].habit_id, props.history).then(() => {
-            props.setHabits(props.habits.filter(item => item !== props.habits[props.habitIndex]));
+            props.setHabits(props.habits.filter(item => item !== props.habits[habitIndex]));
             }
         );//.catch();
     }
@@ -69,7 +71,7 @@ function HabitTitleCell(props) {
     };
     return (
         <>
-            <td key={`EditButtonCell${props.habitIndex}`}>
+            <td key={`EditButtonCell${habitID}`}>
                 {/*<IconButton key={`EditButton${props.habitIndex}`} onClick={handleEditPush} >*/}
                 {/*    <MoreVertIcon/>*/}
                 {/*</IconButton>*/}
@@ -77,7 +79,7 @@ function HabitTitleCell(props) {
                     <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         <MoreVertIcon/>
                     </Button>
-                    <Menu id={`Menu${props.habitIndex}`}
+                    <Menu id={`Menu${habitID}`}
                         anchorEl={anchorEl}
                           anchorOrigin={{vertical:'bottom',horizontal:'right',}}
                           transformOrigin={{vertical: 'top', horizontal: 'right',}}
@@ -93,7 +95,7 @@ function HabitTitleCell(props) {
                     </Menu>
                 </div>
             </td>
-            <td key={`HabitTitleCell${props.habitIndex}`}>
+            <td key={`HabitTitleCell${habitID}`}>
                 {textCell}
             </td>
         </>
