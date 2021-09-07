@@ -39,7 +39,7 @@ function App(props) {
                         <LoginForm/>
                     </Route>
                     <Route path="/home">
-                        <HomePage/>
+                        <HomePage id={'homePageComponent'}/>
                     </Route>
 
                 </Switch>

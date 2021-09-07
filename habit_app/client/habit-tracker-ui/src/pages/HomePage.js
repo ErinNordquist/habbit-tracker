@@ -52,6 +52,7 @@ function HomePage(props) {
     return (
         <div id="HomePageDiv">
             <HabitTable
+                id = "habitTableComponent"
                 habits={habits}
                 setHabits={setHabits}
                 dates={dates}
